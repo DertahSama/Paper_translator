@@ -10,6 +10,7 @@ Credit：改编自<https://github.com/Humphrey1997/Paper_trans>
 - 全自动
 - 全文翻译，中英对照
 - 公式、图片、表格正确处理
+- 可自定义模板
 
 ## 用法
 ### 获取tex文件
@@ -25,3 +26,6 @@ Credit：改编自<https://github.com/Humphrey1997/Paper_trans>
 - 百度 （免费）
 
 申请API方法可见<https://hcfy.app/docs/services/deepl>。申请到密钥后在`translator_keys`文件夹中，加入自己的密钥即可。
+
+### Latex编译pdf
+这一点请自寻教程。对初学者来说，推荐texLive + TexStudio的组合。
