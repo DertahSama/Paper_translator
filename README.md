@@ -1,7 +1,9 @@
 # Paper_trans
 这是一个利用服务商API自动全文翻译科技论文的python脚本，需借助Mathpix识别服务。
 
-Credit：改编自<https://github.com/Humphrey1997/Paper_trans>
+改编自<https://github.com/Humphrey1997/Paper_trans>
+
+这里稍加扩展改编后，打包成了exe，便于使用。
 
 ## 功能
 还在硬啃英文文章吗？是时候全文翻译了！
