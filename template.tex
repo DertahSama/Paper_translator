@@ -1,0 +1,210 @@
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+% \documentclass[twoside,twocolumn]{article}
+\documentclass[oneside,onecolumn]{article}
+\usepackage{ctex}
+\usepackage{blindtext} % Package to generate dummy text throughout this template 
+
+\usepackage{geometry}
+%	\geometry{a4paper,centering,scale=0.8}
+\geometry{a4paper,top=3cm,bottom=3cm,inner=2cm,outer=2cm,marginparwidth=1.8cm}
+
+\usepackage{amsmath,amsthm,amsfonts,amssymb,bm}
+%\usepackage{mathptmx}
+
+%%\usepackage[sc]{mathpazo} % Use the Palatino font
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+\linespread{1.20} % Line spacing - Palatino needs more space between lines
+\usepackage{microtype} % Slightly tweak font spacing for aesthetics
+
+%\usepackage[english]{babel} % Language hyphenation and typographical rules
+
+\usepackage[small,labelfont=bf,up,up]{caption} % Custom captions under/above floats in tables or figures
+\usepackage{booktabs} % Horizontal rules in tables
+
+\usepackage{lettrine} % The lettrine is the first enlarged letter at the beginning of the text
+
+\usepackage{enumitem} % Customized lists
+\setlist[itemize]{noitemsep} % Make itemize lists more compact
+
+\usepackage{abstract} % Allows abstract customization
+\renewcommand{\abstractnamefont}{\normalfont\bfseries} % Set the "Abstract" text to bold
+\renewcommand{\abstracttextfont}{\normalfont\small\itshape} % Set the abstract itself to small italic text
+
+%\usepackage{titlesec} % Allows customization of titles
+%\renewcommand\thesection{\arabic{section}} % arabic numerals for the sections
+%\renewcommand{\thesubsection}{\thesection.\arabic{subsection}}
+%\titleformat{\section}[block]{\large\scshape\centering}{\thesection.}{1em}{} % Change the look of the section titles
+%% \titleformat{\subsection}[block]{\large}{\thesubsection.}{1em}{} % Change the look of the section titles
+%\titleformat{\subsection}[block]{\large\scshape}{\thesubsection.}{1em}{} % Change the look of the section titles
+
+\usepackage{fancyhdr} % Headers and footers
+\pagestyle{fancy} % All pages have headers and footers
+\fancyhf{} % Clear default header and footer
+\fancyfoot[C]{\thepage} % Add page number to the center of the footer
+\renewcommand{\headrulewidth}{0pt}
+
+\usepackage{titling} % Customizing the title section
+\date{}
+
+\usepackage[svgnames]{xcolor} % added by Wenyin for color
+% \usepackage{hyperref} % For hyperlinks in the PDF
+\usepackage[bookmarksnumbered=true,colorlinks=true,linkcolor=Maroon,anchorcolor=blue,citecolor=RoyalBlue,filecolor=blue,menucolor=blue,runcolor=blue,urlcolor=DodgerBlue]{hyperref} % For hyperlinks in the PDF
+
+% for multiple references with dash
+\usepackage[noadjust]{cite}
+\renewcommand{\citedash}{--}    % when \usepackage{cite}
+
+\usepackage{graphicx}
+\usepackage[export]{adjustbox}
+\graphicspath{ {./images/} }
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{mathrsfs} % for \mathscr
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{ulem}
+
+\usepackage[T1]{fontenc}
+% To use \mdutchcal{ } as \mathcal of package dutchcal, the following commands are needed, from https://imathworks.com/tex/tex-latex-new-locally-defined-mathcal-font-for-math-equations/
+% Based on the code from mathalpha.sty: 
+\DeclareFontFamily{U}{dutchcal}{\skewchar \font =45}
+\DeclareFontShape{U}{dutchcal}{m}{n}{
+	<-> dutchcal-r}{}
+\DeclareFontShape{U}{dutchcal}{b}{n}{
+	<-> dutchcal-b}{}
+\DeclareMathAlphabet{\mdutchcal}{U}{dutchcal}{m}{n}
+\SetMathAlphabet{\mdutchcal}{bold}{U}{dutchcal}{b}{n}
+\DeclareMathAlphabet{\mdutchbcal} {U}{dutchcal}{b}{n}
+
+% \usepackage{unicode-math} % for bold math font
+% \setmathfont{XITS Math}
+
+% vector, matrix and tensor
+% \newcommand{\vect}[1]{\boldsymbol{#1}}
+% \newcommand{\vect}{\symbf}
+% \newcommand{\vect}{\mathbf} % works for English letters but not for Greek letters 
+\newcommand{\vect}[1]{\mathbf{\boldsymbol{#1}}} % works for both English and Greek letters, but it does not work with mathtime pro lite fonts, see https://tex.stackexchange.com/questions/3535/bold-math-automatic-choice-between-mathbf-and-boldsymbol-for-latin-and-greek 
+% \newcommand{\matr}[1]{\boldsymbol{\mathrm{#1}}} % \matrix is defined in LaTeX2e kernel
+\newcommand{\tens}[1]{\boldsymbol{\mathrm{#1}}}
+
+\usepackage{mathtools} % for $\intertext{text}$
+
+% for footnote without number, from https://tex.stackexchange.com/questions/170511/footnotes-without-numbering
+\let\svthefootnote\thefootnote
+% \textheight 1in
+\newcommand\blankfootnote[1]{%
+	\let\thefootnote\relax\footnotetext{#1}%
+	\let\thefootnote\svthefootnote%
+}
+\let\svfootnote\footnote
+\renewcommand\footnote[2][?]{%
+	\if\relax#1\relax%
+	\blankfootnote{#2}%
+	\else%
+	\if?#1\svfootnote{#2}\else\svfootnote[#1]{#2}\fi%
+	\fi
+}
+\usepackage{framed}
+\usepackage{breqn}
+%\usepackage{tabu}
+%\usepackage{supertabular}
+%\usepackage{tcolorbox}
+%\tcbuselibrary{skins,breakable,raster}
+
+\usepackage{paracol}
+\setlength{\columnseprule}{0.5pt}
+\setlength{\columnsep}{2em}
+\columnratio{0.4}
+
+\usepackage{setspace}
+
+\newcommand\enzhbox[2]{
+	\quad\par \begin{paracol}{2} \colseprulecolor{black} 
+		%		\begin{tcolorbox}[breakable,enhanced jigsaw,nobeforeafter,colback=gray!5!white,colframe=white,
+			% colframe=gray,boxrule=0pt,rightrule=2pt,toprule=1pt,
+			%			borderline east={1pt}{-1pt}{black} ,borderline north={1pt}{0pt}{gray},
+			%			left=2pt,right=2pt,top=0pt,bottom=0pt] 
+			\begin{spacing}{1.0}
+				\footnotesize  #1
+			\end{spacing}
+			%		\end{tcolorbox}
+		\switchcolumn[1] 
+		#2
+	\end{paracol} 
+}
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\setlength{\droptitle}{-4\baselineskip} % Move the title up
+
+\pretitle{\begin{center}\Huge\bfseries} % Article title formatting
+	\posttitle{\end{center}} % Article title closing formatting
+\title{}
+\author{Author1, Author2}
+\renewcommand{\maketitlehookd}{%
+	\begin{abstract}
+	\end{abstract}
+}
+
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+\begin{sloppypar}
+
+\maketitle
+
+% ==document boby begins
+
+% ==document body here
+
+% ==document body ends
+
+\section*{References}
+	%----------------------------------------------------------------------------------------
+\end{sloppypar}	
+\begin{flushright}
+	\vfill \footnotesize
+	——本翻译PDF由Paper_translator生成, \url{https://github.com/DertahSama/Paper_translator}
+\end{flushright}
+\end{document}
+
+
+
+
+% =========环境格式区===========
+
+% ==figure format begins
+\begin{figure}[tbp]
+	\centering
+	\includegraphics[max width=0.6\textwidth,max height=1.0\textheight]{}
+	\caption{}
+	\label{}
+\end{figure}
+% ==figure format ends
+
+% ==equation format begins
+\begin{dmath}[compact]
+	% ==here
+\end{dmath}
+% ==equation format ends
+
+% ==table format begins
+\begin{table}[ht]
+	\centering
+	\caption{Table Title}
+	\begin{tabular}{ccc}
+		\toprule \toprule
+		H1 & H2 & H3 \\
+		\hline
+		A1 & A2 & A3 \\
+		\bottomrule \bottomrule
+	\end{tabular}
+\end{table}
+% ==table format ends
