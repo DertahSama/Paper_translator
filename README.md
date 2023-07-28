@@ -6,7 +6,7 @@
 改编自<https://github.com/Humphrey1997/Paper_trans>，这里稍加扩展改编，并打包成了exe便于使用。
 
 ## 功能
-还在硬啃英文文章吗？是时候全文翻译了！（该样例见release）
+还在硬啃英文文章吗？是时候全文翻译了！（该样例见`/DEMO`）
 ![Alt text](demo-1.png)
 ![Snipaste_2023-07-14_23-05-14](https://github.com/DertahSama/Paper_trans/assets/74524914/e43cfd01-32e0-4c64-87d6-12391638f733)
 - 全自动排版、翻译

@@ -1,0 +1,390 @@
+%----------------------------------------------------------------------------------------
+ %	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+ %----------------------------------------------------------------------------------------
+ 
+ % \documentclass[twoside,twocolumn]{article}
+ \documentclass[oneside,onecolumn]{article}
+ \usepackage{ctex}
+ \usepackage{blindtext} % Package to generate dummy text throughout this template 
+ 
+ \usepackage{geometry}
+ %	\geometry{a4paper,centering,scale=0.8}
+ \geometry{a4paper,top=2cm,bottom=2cm,inner=2cm,outer=5cm,marginparwidth=1.8cm}
+ 
+ \usepackage{amsmath,amsthm,amsfonts,amssymb,bm}
+ %\usepackage{mathptmx}
+ 
+ %%\usepackage[sc]{mathpazo} % Use the Palatino font
+ \usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+ \linespread{1.20} % Line spacing - Palatino needs more space between lines
+ \usepackage{microtype} % Slightly tweak font spacing for aesthetics
+ 
+ \usepackage[english]{babel} % Language hyphenation and typographical rules
+ 
+ \usepackage[small,labelfont=bf,up,up]{caption} % Custom captions under/above floats in tables or figures
+ \usepackage{booktabs} % Horizontal rules in tables
+ 
+ \usepackage{lettrine} % The lettrine is the first enlarged letter at the beginning of the text
+ 
+ \usepackage{enumitem} % Customized lists
+ \setlist[itemize]{noitemsep} % Make itemize lists more compact
+ 
+ \usepackage{abstract} % Allows abstract customization
+ \renewcommand{\abstractnamefont}{\normalfont\bfseries} % Set the "Abstract" text to bold
+ \renewcommand{\abstracttextfont}{\normalfont\small\itshape} % Set the abstract itself to small italic text
+ 
+ \usepackage{titlesec} % Allows customization of titles
+ \renewcommand\thesection{\arabic{section}} % arabic numerals for the sections
+ \renewcommand{\thesubsection}{\thesection.\arabic{subsection}}
+ 
+ \titleformat{\section}[block]{\large\scshape\centering}{\thesection.}{1em}{} % Change the look of the section titles
+ % \titleformat{\subsection}[block]{\large}{\thesubsection.}{1em}{} % Change the look of the section titles
+ \titleformat{\subsection}[block]{\large\scshape}{\thesubsection.}{1em}{} % Change the look of the section titles
+ 
+ \usepackage{fancyhdr} % Headers and footers
+ \pagestyle{fancy} % All pages have headers and footers
+ \fancyhf{} % Clear default header and footer
+ \fancyfoot[C]{\thepage} % Add page number to the center of the footer
+ \renewcommand{\headrulewidth}{0pt}
+ 
+ \usepackage{titling} % Customizing the title section
+ \date{}
+ 
+ \usepackage[svgnames]{xcolor} % added by Wenyin for color
+ % \usepackage{hyperref} % For hyperlinks in the PDF
+ \usepackage[colorlinks=true,linkcolor=Maroon,anchorcolor=blue,citecolor=RoyalBlue,filecolor=blue,menucolor=blue,runcolor=blue,urlcolor=DodgerBlue]{hyperref} % For hyperlinks in the PDF
+ 
+ % for multiple references with dash
+ \usepackage[noadjust]{cite}
+ \renewcommand{\citedash}{--}    % when \usepackage{cite}
+ 
+ \usepackage{graphicx}
+ \usepackage[export]{adjustbox}
+ \graphicspath{ {./images/} }
+ 
+ \usepackage{amsmath}
+ \usepackage{amsfonts}
+ \usepackage{amssymb}
+ \usepackage{mathrsfs} % for \mathscr
+ \usepackage{booktabs}
+ \usepackage{multirow}
+ \usepackage{ulem}
+ 
+ \usepackage[T1]{fontenc}
+ % To use \mdutchcal{ } as \mathcal of package dutchcal, the following commands are needed, from https://imathworks.com/tex/tex-latex-new-locally-defined-mathcal-font-for-math-equations/
+ % Based on the code from mathalpha.sty: 
+ \DeclareFontFamily{U}{dutchcal}{\skewchar \font =45}
+ \DeclareFontShape{U}{dutchcal}{m}{n}{
+ 	<-> dutchcal-r}{}
+ \DeclareFontShape{U}{dutchcal}{b}{n}{
+ 	<-> dutchcal-b}{}
+ \DeclareMathAlphabet{\mdutchcal}{U}{dutchcal}{m}{n}
+ \SetMathAlphabet{\mdutchcal}{bold}{U}{dutchcal}{b}{n}
+ \DeclareMathAlphabet{\mdutchbcal} {U}{dutchcal}{b}{n}
+ 
+ % \usepackage{unicode-math} % for bold math font
+ % \setmathfont{XITS Math}
+ 
+ % vector, matrix and tensor
+ % \newcommand{\vect}[1]{\boldsymbol{#1}}
+ % \newcommand{\vect}{\symbf}
+ % \newcommand{\vect}{\mathbf} % works for English letters but not for Greek letters 
+ \newcommand{\vect}[1]{\mathbf{\boldsymbol{#1}}} % works for both English and Greek letters, but it does not work with mathtime pro lite fonts, see https://tex.stackexchange.com/questions/3535/bold-math-automatic-choice-between-mathbf-and-boldsymbol-for-latin-and-greek 
+ % \newcommand{\matr}[1]{\boldsymbol{\mathrm{#1}}} % \matrix is defined in LaTeX2e kernel
+ \newcommand{\tens}[1]{\boldsymbol{\mathrm{#1}}}
+ 
+ \usepackage{mathtools} % for $\intertext{text}$
+ 
+ % for footnote without number, from https://tex.stackexchange.com/questions/170511/footnotes-without-numbering
+ \let\svthefootnote\thefootnote
+ % \textheight 1in
+ \newcommand\blankfootnote[1]{%
+ 	\let\thefootnote\relax\footnotetext{#1}%
+ 	\let\thefootnote\svthefootnote%
+ }
+ \let\svfootnote\footnote
+ \renewcommand\footnote[2][?]{%
+ 	\if\relax#1\relax%
+ 	\blankfootnote{#2}%
+ 	\else%
+ 	\if?#1\svfootnote{#2}\else\svfootnote[#1]{#2}\fi%
+ 	\fi
+ }
+ \usepackage{framed}
+ \usepackage{breqn}
+ %----------------------------------------------------------------------------------------
+ %	TITLE SECTION
+ %----------------------------------------------------------------------------------------
+ 
+ \setlength{\droptitle}{-4\baselineskip} % Move the title up
+ 
+ \pretitle{\begin{center}\Huge\bfseries} % Article title formatting
+ 	\posttitle{\end{center}} % Article title closing formatting
+ \title{Electron distribution function in laser heated plasmas}
+ \author{E. Fourkal,  V. Yu. Bychenkov,   W. Rozmus et al.}
+ \renewcommand{\maketitlehookd}{%
+ 	\begin{abstract}
+ A new electron distribution function has been found in laser heated homogeneous plasmas by an analytical solution to the kinetic equation and by particle simulations. The basic kinetic model describes inverse bremsstrahlung absorption and electron-electron collisions. The non-Maxwellian distribution function is comprised of a super-Gaussian bulk of slow electrons and a Maxwellian tail of energetic particles. The tails are heated due to electron-electron collisions and energy redistribution between superthermal particles and light absorbing slow electrons from the bulk of the distribution function. A practical fit is proposed to the new electron distribution function. Changes to the linear Landau damping of electron plasma waves are discussed. The first evidence for the existence of non-Maxwellian distribution functions has been found in the interpretation, which includes the new distribution function, of the Thomson scattering spectra in gold plasmas [Glenzer et al., Phys. Rev. Lett. 82, 97 (1999)]. (C) 2001 American Institute of Physics.
+ 	\end{abstract}
+ }
+ 
+ %----------------------------------------------------------------------------------------
+ 
+ \begin{document}
+ \begin{sloppypar}
+ 
+ \maketitle
+ 
+ 
+ [DOI: 10.1063/1.1334611]
+ 
+ \section{INTRODUCTION}
+ There has been an ongoing interest in the description of an electron distribution function (EDF) in collisionally heated laser plasmas. ${ }^{1-5}$ Since the work by Langdon ${ }^{1}$ it has been known that inverse bremsstrahlung (IB) absorption of powerful lasers in high $Z$ plasmas can result in a nonMaxwellian EDF. These EDFs belong to a family of superGaussian distributions $\approx \exp \left(-v^{\mu}\right)$ (Ref. 4) which can continuously vary from Maxwellian $(\mu=2)$, for $\alpha=Z v_{E}^{2} / v_{T e}^{2}$ $<1$, to a super-Gaussian form with $\mu=5$ for $\alpha \gg 1$ ( $v_{E}$ is the electron quiver velocity in a laser field, $v_{T e}$ is the electron thermal velocity). Such nonequilibrium states can exist in a plasma for $\alpha>1$ because the IB heating rate is sufficienly fast for slow particles so that electron-electron $(e-e)$ collisions cannot restore a Maxwellian EDF.
+ 
+ We have noticed that these results have been obtained from the approximate kinetic models (cf. Refs. 1 and 4) which include an $e-e$ collision operator acting only on the isotropic part of the distribution function and neglect $e-e$ collision terms involving the anisotropic part of the electron distribution function. ${ }^{1,4}$ The omitted terms have a small effect on slow electrons $\left(v<v_{T e}\right)$ which are heated by the laser. However, they cannot be neglected in the description of a high energy part of the EDF, particularly in the transition region between Maxwellian tails of fast electrons and
+ 
+ a) On leave from the P. N. Lebedev Physics Institute, Russian Academy of Science, Moscow 117924, Russia. the super-Gaussian bulk of the EDF. The EDF combining the super-Gaussian form at low electron energies and Maxwellian tails for $v \gg v_{T e}$ constitutes the main new result of this paper. This is a solution to the full kinetic equation, which includes the complete description of $e-e$ collisions in addition to the IB heating term. The EDF is characterized by a time varying scaling velocity in the entire range of particle velocities. The tail electrons increase their average energy due to $e-e$ collisions with slow particles. These results have been confirmed by particle simulations, which have also validated a useful analytical fit to the non-Maxwellian EDF.
+ 
+ The existence of Maxwellian tails for energetic electrons in laser heated EDFs is particularly important for the description of Langmuir waves. Fast electrons determine the damping of Langmuir waves and therefore can play an important role in the evolution of parametric instabilities. The spectra of high frequency electrostatic fluctuations are measurable in Thomson scattering experiments ${ }^{6}$ and are sensitive to the particular form of the EDF. We find that the experimental spectra compare well with theoretical predictions based on the new EDF in a gold plasma. Finally, the transition between the super-Gaussian part of the EDF and the Maxwellian tail can occur at velocities as low as $(2-3) v_{T e}$. These are velocities characterizing heat carrying electrons and therefore the new EDF can also alter thermal transport processes. ${ }^{7}$
+ 
+ It is well known that a super-Gaussian EDF can lead to a reduced IB heating rate as compared to the Maxwellian distribution. This EDF contains a smaller number of slow elec- trons due to rapid heating of low energy particles by the IB process. At the same time the super-Gaussian EDF reduces plasma wave damping because of the absence of high energy tails. These tails are depleted because the kinetic model studied before in Refs. 1 and 4 does not include $e-e$ collisional terms involving an anisotropic part of the EDF. Deviations from the super-Gaussian distribution functions have been also examined by Chichkov et al. ${ }^{5}$ Using perturbation theory, the authors found large differences as compared to super-Gaussian solutions at high velocities, which led to the breakup of the perturbative expansion and clearly demonstrated the existence of high energy particles. They noticed that because the laser energy absorbed by the fast electrons is much smaller than energy absorbed by the slow electrons, the EDF at high velocities should remain close to Maxwellian due to the $e-e$ collisions between fast and slow particles. However, the approach of Ref. 5 could not provide the electron distribution at high velocities.
+ 
+ In the present paper we investigate the time evolution of an electron distribution function using an analytical solution to the Fokker-Planck kinetic equation and particle simulations. We accurately account for the $e-e$ collisional contribution in the equation for the symmetrical part of the electron distribution function which is different from the model used in Refs. 1 and 4. We confirm that the bulk electron distribution function can be well approximated by the superGaussian distribution ${ }^{4}$ depending on the value of the parameter $\alpha$. It is shown that indeed the tail of the distribution function approaches a Maxwellian form due to the $e-e$ collisions. The bulk remains in super-Gaussian form and there is a transition region in velocity space where the distribution function is neither super-Gaussian nor Maxwellian. The particle simulations confirm such a form of the distribution function for arbitrary values of the parameter $\alpha$ and allow finding a fit for the entire range of electron energies.
+ 
+ The paper is organized as follows. Section II presents a derivation of the equation for the symmetrical part of the electron distribution function in a homogeneous plasma heated by a dipole electromagnetic field with $e-e$ collisions taken into account. A self-similar solution to the EDF is discussed in Sec. III. Section IV describes particle simulations and gives a fit for EDF in the entire range of electron energies. Section $\mathrm{V}$ deals with the damping of electron plasma waves and electron plasma wave fluctuation spectra which compares well with observations from Thomson scattering. ${ }^{6}$ We conclude with a discussion and summary in Sec. VI.
+ 
+ \section{KINETIC EQUATION FOR A SYMMETRIC PART OF THE ELECTRON DISTRIBUTION FUNCTION}
+ We start from the Fokker-Planck kinetic equation for the electron distribution function $f$ in a homogeneous high- $Z$ plasma in a presence of a high frequency electric field $\mathbf{E}$ $=\mathbf{E}_{0} \cos \omega_{0} t$,
+ 
+ %----------------------------------------------------------------------------------------
+ \frac{\partial f}{\partial t}+\frac{e \mathbf{E}}{m} \cdot \frac{\partial f}{\partial \mathbf{v}}=C_{i e}(f)+C_{e e}(f, f),
+ %	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+ 
+ where $C_{i e}(f)$ and $C_{e e}(f, f)$ are the electron-ion and electron-electron collision integrals. For a moderate field intensity, $v_{E} / v_{T e}<1$, the anisotropic part of an electron distribution function $f_{1}=f-f_{0}$ is small as compared to the symmetrical part $f_{0}$ and therefore can be determined from Eq. (1) by using a perturbative approach
+ 
+ %----------------------------------------------------------------------------------------
+ f_{1}=  -\frac{\mathbf{v}_{\mathbf{E}} \cdot \mathbf{v}}{v} \frac{\partial f_{0}}{\partial v} \sin \omega_{0} t+\frac{\cos \omega_{0} t}{\omega_{0}}\left[\nu_{e i} \frac{\mathbf{v}_{\mathbf{E}} \cdot \mathbf{v}}{v} \frac{\partial f_{0}}{\partial v}\right.
+ %	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+ %----------------------------------------------------------------------------------------
+ \left.-C_{e e}\left(f_{0}, \frac{\mathbf{v}_{\mathbf{E}} \cdot \mathbf{v}}{v} \frac{\partial f_{0}}{\partial v}\right)-C_{e e}\left(\frac{\mathbf{v}_{\mathbf{E}} \cdot \mathbf{v}}{v} \frac{\partial f_{0}}{\partial v}, f_{0}\right)\right] .
+ %	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+ 
+ Here $\nu_{e i}(v)=4 \pi Z n_{e} e^{4} \Lambda / m_{e}^{2} v^{3}$ is the usual velocitydependent $e-i$ collision frequency, $\Lambda$ is the Coulomb logarithm, and $e, m_{e}$, and $n_{e}$ are the electron charge, mass, and density, respectively.
+ 
+ Expression (2) represents the fast varying anisotropic part of the electron distribution function. Substituting (2) into the kinetic equation (1) and averaging over the electric field oscillation period, $1 / \omega_{0}$, we obtain the following equation for the slowly varying symmetrical distribution function:
+ 
+ %----------------------------------------------------------------------------------------
+ \frac{\partial f_{0}}{\partial t}=  \frac{v_{E}^{2}}{6 v^{2}} \frac{\partial}{\partial v}\left(v^{2} \nu_{e i} \frac{\partial f_{0}}{\partial v}\right)+C_{e e}\left(f_{0}, f_{0}\right)
+ %	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+ %----------------------------------------------------------------------------------------
+ -\frac{v_{E}^{2}}{6 v^{2}} \frac{\partial}{\partial v} v^{2}\left[C_{e e}\left(f_{0}, \frac{\partial f_{0}}{\partial v}\right)+C_{e e}\left(\frac{\partial f_{0}}{\partial v}, f_{0}\right)\right]
+ %	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+ %----------------------------------------------------------------------------------------
+ -\frac{v_{E}^{2}}{2} C_{e e}\left(\frac{\partial f_{0}}{\partial v}, \frac{\partial f_{0}}{\partial v}\right) .
+ %	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+ 
+ Electron-electron collisional operators on the right-hand side of Eq. (3) can be written in the explicit form in accordance with Ref. 8:
+ 
+ %----------------------------------------------------------------------------------------
+ C_{e e}\left(f_{0}, f_{0}\right)=\frac{Y}{v^{2}} \frac{\partial}{\partial v}\left[f_{0} I_{0}^{0}+\frac{v}{3}\left(I_{2}^{0}+J_{-1}^{0}\right) \frac{\partial f_{0}}{\partial v}\right],
+ %	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+ %----------------------------------------------------------------------------------------
+ C_{e e}\left(\frac{\partial f_{0}}{\partial v}, \frac{\partial f_{0}}{\partial v}\right)=\frac{Y}{3 v^{2}} \frac{\partial}{\partial v}\left[-\frac{\partial^{2} f_{0}}{\partial v^{2}} I_{2}^{0}+\frac{\partial f_{0}}{\partial v}\right.
+ %	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+ %----------------------------------------------------------------------------------------
+ \left.\times\left(4 \pi v^{2} f_{0}+\frac{1}{v}\left(I_{2}^{0}-3 I_{0}^{0}\right)\right)\right]
+ %	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+ %----------------------------------------------------------------------------------------
+ C_{e e}\left(f_{0}, \frac{\partial f_{0}}{\partial v}\right)+C_{e e}\left(\frac{\partial f_{0}}{\partial v}, f_{0}\right)
+ %	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+ %----------------------------------------------------------------------------------------
+ =\frac{Y}{3 v} \frac{\partial^{3} f_{0}}{\partial v^{3}}\left(I_{2}^{0}+J_{-1}^{0}\right)
+ %	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+ %----------------------------------------------------------------------------------------
+ +\frac{Y}{3 v^{2}} \frac{\partial^{2} f_{0}}{\partial v^{2}}\left(3 I_{0}^{0}-4 I_{2}^{0}+2 J_{-1}^{0}\right)+\frac{Y}{3 v^{3}} \frac{\partial f_{0}}{\partial v}
+ %	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+ %----------------------------------------------------------------------------------------
+ \times\left(-6 I_{0}^{0}+4 I_{2}^{0}-2 J_{-1}^{0}\right)+8 \pi Y \frac{\partial f_{0}}{\partial v} f_{0},
+ %	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+ 
+ where $Y=4 \pi n_{e} e^{4} \Lambda / m_{e}^{2}, \Lambda$ is the Coulomb logarithm and
+ 
+ %----------------------------------------------------------------------------------------
+ I_{j}^{i}=\frac{4 \pi}{v^{j}} \int_{0}^{v} f_{i} v^{2+j} d v, \quad J_{j}^{i}=\frac{4 \pi}{v^{j}} \int_{v}^{\infty} f_{i} v^{2+j} d v .
+ %	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+ 
+ By neglecting in Eq. (3) terms proportional to $v_{E}^{2} C_{e e}$, which originate from $e-e$ collisions involving the anisotropic part of the EDF, we can reduce (3) to the model equation analyzed in Refs. 1 and 4. However, all of the $e-e$ collision terms in Eq. (3) are important for the correct description of the electron distribution function at large velocities $(v$ $>v_{T e}$ ). Note also that Eq. (2.3) of Ref. 9, which is the kinetic equation for the symmetric part of the distribution function, is missing terms $\propto v_{E}^{2}\left[C_{e e}\left(f_{0}, \partial f_{0} / \partial v\right)\right.$ $\left.+C_{e e}\left(\partial f_{0} / \partial v, f_{0}\right)\right]$.
+ 
+ \section{ELECTRON DISTRIBUTION FUNCTION}
+ We use the standard definition for the electron density, $n_{e}$, thermal velocity, $v_{T e}$, and electron temperature, $T_{e}$ :
+ 
+ %----------------------------------------------------------------------------------------
+ n_{e}=4 \pi \int v^{2} f_{0} d v, \quad v_{T e}^{2}=\frac{4 \pi}{3 n_{e}} \int v^{4} f_{0} d v \equiv \frac{T_{e}}{m_{e}} .
+ %	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+ 
+ Multiplying Eq. (1) by $v^{2}$ and integrating over the entire velocity range one obtains an equation for the time evolution of the electron temperature
+ 
+ %----------------------------------------------------------------------------------------
+ \frac{\partial T_{e}}{\partial t}=\frac{4 \pi Z Y}{9 n_{e} m_{e}} v_{E}^{2} f_{0}(0, t),
+ %	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+ 
+ which demonstrates that the heating rate is entirely defined by very slow electrons $\left[f_{0}(0, t) \equiv f_{0}(v=0, t)\right]$. For times much longer than the $e-e$ collision time we look for a solution to the electron distribution function in the following form:
+ 
+ %----------------------------------------------------------------------------------------
+ f_{0}=\frac{n}{(2 \pi)^{3 / 2} v_{T e}(t)^{3}} \phi\left(\frac{v}{v_{T e}(t)}, t\right),
+ %	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+ 
+ where $v_{T e}(t)$ grows in time according to Eq. (6). By introducing a dimensionless velocity $x=v / v_{T e}(t)$, the equation for $\phi(x)$ can be written in the following form:
+ 
+ %----------------------------------------------------------------------------------------
+ \phi I_{0}^{0}  +\frac{x}{3} \frac{\partial \phi}{\partial x}\left(I_{2}^{0}+J_{-1}^{0}\right)+\frac{\alpha}{6 x}\left[\frac{\partial \phi}{\partial x}+\sqrt{\frac{2}{\pi}} \frac{x^{4}}{3} \phi \phi(0)\right]
+ %	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+ %----------------------------------------------------------------------------------------
+ -\frac{\alpha}{6 Z}\left[\frac{x}{3} \frac{\partial^{3} \phi}{\partial x^{3}}\left(I_{2}^{0}+J_{-1}^{0}\right)+\frac{\partial^{2} \phi}{\partial x^{2}}\left(I_{0}^{0}-\frac{7}{3} I_{2}^{0}+\frac{2}{3} J_{-1}^{0}\right)\right.
+ %	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+ %----------------------------------------------------------------------------------------
+ \left.+\frac{1}{x} \frac{\partial \phi}{\partial x}\left(-5 I_{0}^{0}+\frac{7}{3} I_{2}^{0}-\frac{2}{3} J_{-1}^{0}\right)+3 \sqrt{\frac{8}{\pi} x^{2}} \frac{\partial \phi}{\partial x} \phi\right]=0,
+ %	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+ 
+ where $I_{0}^{0}=\sqrt{2 / \pi} \int_{0}^{x} \phi x^{2} d x, \quad I_{2}^{0}=\sqrt{2 / \pi} x^{-2} \int_{0}^{x} \phi x^{4} d x$, and $J_{-1}^{0}=\sqrt{2 / \pi} x \int_{x}^{\infty} \phi x d x$. We have neglected the terms proportional to $\partial \phi / \partial t$ in deriving Eq. (8). We assume that these terms are small after the initial time corresponding to few $e-e$ collision times. In Eq. (8) the term proportional to $\alpha / x$ describes IB heating while all the others (with and without the factor $\alpha$ ) are due to $e-e$ collisions. The interplay between IB heating and $e-e$ collisional relaxation determines the electron distribution function in the entire range of electron velocities. The function $\phi(x)$ in Eq. (8) satisfies two integral relations,
+ 
+ %----------------------------------------------------------------------------------------
+ \int_{0}^{\infty} x^{2} \phi d x=\sqrt{\pi / 2}, \quad \int_{0}^{\infty} x^{4} \phi d x=3 \sqrt{\pi / 2},
+ %	PACKAGES AND OTHER DOCUMENT CONFIGURATIONSwhich originate from definitions of the electron density and thermal energy (5).
+ 
+ \begin{figure}[htbp]
+ 	\centering
+ 	\includegraphics[max width=0.6\textwidth,max height=1.0\textheight]{2023_07_14_223496a1d5b88caed160g-3}
+ 	\caption{Solutions to the kinetic equation (10) for $\alpha=0.5$ (1), and $\alpha=3$ (2), represented by solid lines as compared to the super-Gaussian fit (11).}
+ 	\label{figure1}
+ \end{figure}
+ 
+ 
+ The term proportional to $Z^{-1}$ in Eq. (8) which originated from the anisotropic part of the $e-e$ collision operator can be neglected for electrons from a bulk of the distribution function $(x \leqq 1)$. For such a case the equation for $\phi$ (8) and integral relations defining $I_{0}^{0}, I_{2}^{0}$, and $J_{-1}^{0}$ can be rewritten as a system of four first-order ordinary nonlinear differential equations:
+ 
+ $\frac{\alpha}{6} \frac{d \phi}{d x}+\sqrt{\frac{2}{\pi}} \frac{\alpha}{18} x^{4} \phi(0) \phi+x I_{0}^{0} \phi$
+ 
+ %----------------------------------------------------------------------------------------
+ +\left(\frac{1}{3} x^{2} I_{2}^{0}(x)+\frac{x^{2}}{3} J_{-1}^{0}\right) \frac{d \phi}{d x}=0,
+ %	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+ 
+ $\frac{d I_{0}^{0}}{d x}=\sqrt{\frac{2}{\pi}} x^{2} \phi, \quad \frac{d\left(x^{2} I_{2}^{0}\right)}{d x}=\sqrt{\frac{2}{\pi}} x^{4} \phi$,
+ 
+ $\frac{d\left(J_{-1}^{0} / x\right)}{d x}=-\sqrt{\frac{2}{\pi}} x \phi$
+ 
+ The system of equations given by (10) has been solved numerically using the MATHEMATICA program, ${ }^{10}$ giving results that are similar to distribution functions obtained by numerical simulations in Ref. 11. We have found solutions for different values of the parameter $\alpha$. Figure 1 shows electron distribution functions for $\alpha=0.5$ and 3 in comparison with the super-Gaussian fit which has been obtained from the numerical solution to the Fokker-Planck kinetic equation, ${ }^{4}$
+ 
+ %----------------------------------------------------------------------------------------
+ \phi(x)=\phi_{0} e^{-\left(x / x_{0}\right)^{m}}=  3 \sqrt{\frac{\pi}{2}} \frac{m \Gamma(5 / m)^{3 / 2}}{(3 \Gamma(3 / m))^{5 / 2}}
+ %	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+ %----------------------------------------------------------------------------------------
+ \times \exp \left[-\left(\frac{x}{x_{0}}\right)^{m}\right],
+ %	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+ 
+ where
+ 
+ %----------------------------------------------------------------------------------------
+ x_{0}=\left(\frac{3 \Gamma(3 / m)}{\Gamma(5 / m)}\right)^{1 / 2}, \quad m=2+\frac{3}{1+1.66 / \alpha^{0.724}} .
+ %	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+ 
+ As one can see the super-Gaussian fit (11) gives a good approximation for the bulk electrons of the laser heated distribution function. Note that the different fit has also been proposed to the solution of Eq. (10) in Ref. 12. It has a different functional form but similar accuracy to the results of Matte et al. ${ }^{4}$
+ 
+ However, in order to describe the evolution of an electron distribution in the entire region of particle velocities one has to include proper electron-electron collisional terms and solve the kinetic equation (8). We find the validity condition for the approximation leading to Eq. (8) by comparing $e-e$ collision terms omitted in (10) with the IB heating term. This gives
+ 
+ %----------------------------------------------------------------------------------------
+ v / v_{T e}<x^{*} \equiv Z^{1 / 2(m-1)}\left[\frac{3 \Gamma(3 / m)}{\Gamma(5 / m)}\right]^{m / 4(m-1)}, \quad \alpha \gtrsim 1,
+ %	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+ 
+ which defines energies of particles described by the superGaussian distribution function (11). For example, if $m=5,{ }^{1}$ condition (12) reads $v<(2-2.5) v_{T e}$ for $Z=10-40$. For velocities larger than $v_{T e} X^{*}$ (12), the $e-e$ collision operators will dominate the heating term thus redistributing electron tails toward the Maxwellian. The laser energy absorbed directly by fast electrons is much smaller than the energy absorbed by the bulk electrons and their distribution is close to Maxwellian. However, the characteristic temperature of the tail is increasing simultaneously with the slow electron energy due to $e-e$ collisions between fast and slow particles.
+ 
+ \section{PARTICLE SIMULATIONS}
+ Kinetic simulations of the laser heated EDF in homogeneous plasmas have been performed using a particle code. Collisions between electrons and ions, and electrons and electrons have been introduced using the binary collision model by a Monte Carlo method, ${ }^{13,14}$ which conserves particle number, energy, and momentum. No self-consistent fields are included into the numerical model, which provides an efficient alternative to the usual Fokker-Planck simulations. By using a two temperature relaxation problem as a test we have found very good agreement between the results from the Fokker-Planck code with exact nonlinear $e-e$ collisional term ${ }^{15}$ and our particle code.
+ 
+ The particle velocity and position are changed during each time step due to both the electric dipole pump field and scattering on other particles. Simulations start from a given initial electron distribution function, which is often taken to be a nonequilibrium EDF. We illustrate our findings by discussing results of the particular example where the laser frequency $\omega_{0}$ is chosen to be equal to $6 \omega_{p e}$. In order to decrease the computation time, we have used relatively high thermal $e-i$ collision frequency, $\nu_{e i}\left(v_{T e}\right) / \omega_{p e}=0.05$, and the ratio between the initial quiver and electron thermal velocities at $t=0$ has been chosen $1 / 4<v_{E}^{2} / v_{T e}^{2}<1 / 2$. The total number of particles, electrons, and ions is 256000 , so that the electron distribution function can be resolved in the velocity range $0<v / v_{T e}(t)<6$.
+ 
+ First, we have calculated an electron heating rate. Figure 2 shows an electron temperature normalized to its initial value versus time. The plot demonstrates that the heating rate changes with time. This is understandable since the heating rate depends on the form of the EDF, which changes in time as well. The initial heating rate is the largest. As the distri-bution function evolves toward the super-Gaussian and the depletion of the number of slow electrons occurs, the plasma heating rate decreases. We have also plotted in Fig. 2 the heating rate which is predicted by Eq. (6) with $f_{0}$ given by the solution to Eq. (10). There is a good agreement between particle simulations and the theory.
+ 
+ \begin{figure}[htbp]
+ 	\centering
+ 	\includegraphics[max width=0.6\textwidth,max height=1.0\textheight]{2023_07_14_223496a1d5b88caed160g-4}
+ 	\caption{The electron temperature (solid line) from particle simulation in comparison with a theoretical result for the heating rate given by Eq. (11) (dashed line) in a plasma with $Z=40$ and $\alpha(0)=4.8$.}
+ 	\label{figure2}
+ \end{figure}
+ 
+ 
+ In Fig. 3 we plot the EDF at the time when, after the initial transient, the distribution reaches a self-similar form. Simulations show that the bulk of the EDF evolves quickly toward the super-Gaussian form, but the slowly varying tail of the EDF contains significantly more particles than predicted by Eq. (11). For $v \gg v_{T e}$ the tail reaches a Maxwellian form with a temperature defined by Eq. (6), in good agreement with theory. Based on our simulation results we propose a fit for the EDF which modifies the well-known expression (11) in order to describe high energy tails. Mainly we introduce a velocity dependence into fitting parameters $m$ and $x_{0}$ :%----------------------------------------------------------------------------------------
+ \begin{figure}[htbp]
+ 	\centering
+ 	\includegraphics[max width=0.6\textwidth,max height=1.0\textheight]{2023_07_14_223496a1d5b88caed160g-4(1)}
+ 	\caption{The time averaged electron distribution function from the particle simulation (the solid line in the top panel and line 1 in the bottom panel) vs velocity ( $\alpha=3.1$ ) when the EDF is already in a self-similar form ( $Z$ =30). The dashed line in the top panel represents the Maxwellian distribution and the super-Gaussian distribution (13) is shown as a dot-dashed curve in the top panel and curve 2 in the bottom panel.}
+ 	\label{figure3}
+ \end{figure}
+ 
+ \begin{figure}[htbp]
+ 	\centering
+ 	\includegraphics[max width=0.6\textwidth,max height=1.0\textheight]{2023_07_14_223496a1d5b88caed160g-5(1)}
+ 	\caption{Evolution of $x^{*}$ [Eq. (12)] for $\alpha(0)=4.8$ and $Z=40$ (1) and $\alpha(0)$ $=0.6$ and $Z=5(2)$.}
+ 	\label{figure4}
+ \end{figure}
+ 
+ \phi(x)=\phi_{0} e^{-\left(x / x_{0}(x)\right)^{m(x)}},
+ %	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+ %----------------------------------------------------------------------------------------
+ m(x)=2+\frac{m-2}{1+\left(x / x^{*}\right)^{9}}, \quad x_{0}(x)=x_{0}(m(x))
+ %	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+ 
+ such that at $x \ll x^{*}, m(x)=m$ and $x_{0}(x)=x_{0}$. Expressions (11), (6) with a new definition of $m$ (13) give the superGaussian distribution at thermal velocities and describe well the transition to the Maxwellian tail at high velocities. We have found very good agreement between (13) and the simulation results. The evolution of $x^{*}$ is shown in Fig. 4 . In the dimensional form, $v_{T e} X^{*}$ increases in time a little faster than thermal velocity (cf. Fig. 4).
+ 
+ \section{ELECTRON PLASMA WAVE DAMPING AND FLUCTUATION SPECTRUM}
+ Non-Maxwellian EDFs affect many processes in laserproduced plasmas. In particular, they can reduce the rate of laser light absorption, modify thermal transport, or reduce damping on Langmuir waves and therefore change the evolution of parametric instabilities involving electron plasma waves. The new solutions discussed in this paper are varying in time and therefore can be applied to the descriptions of processes which are faster than the IB heating rate.
+ 
+ In order to fully understand the impact of nonMaxwellian EDFs on the long time scale, when transport processes may be as equally important as the IB heating, one needs to examine the effect of plasma inhomogeneity. Such simulations $^{4}$ have shown that the EDF reaches quasistationary state without changing its functional form, which is well approximated by a fit quoted in Eq. (11). However, the kinetic model in Ref. 4 omits $e-e$ collision terms which are important for the formation of energetic electron tails. Thus, it is likely that a more complete theory of inhomogeneous plasmas will produce quasistationary EDF with tails of fast electrons, particularly in view of the strong experimental evidence from Thomson scattering spectra as described in the following. For similar reasons more recent Fokker-Planck simulations in the geometry relevant to random phase plate laser beams are likely underestimating the importance of tails and overestimating the reduction of Langmuir wave damping. ${ }^{16}$ In fact the tails in the non-Maxwellian EDF have been theoretically predicted in the model calculations relevant to inhomogeneous underdense plasmas in the presence of only electron-ion collisions. ${ }^{17}$ These tails display powerlike dependence on electron velocity.It is straightforward to show that the new EDF based on expressions (11) and (13) increases Langmuir wave damping as compared to a simple super-Gaussian fit (11). The changes due to the non-Maxwellian distribution function occur mostly in an imaginary part of the electron susceptibility $\chi_{e}(\omega, k)$, which can be approximated by the following formula: ${ }^{18}$
+ 
+ \begin{figure}[htbp]
+ 	\centering
+ 	\includegraphics[max width=0.6\textwidth,max height=1.0\textheight]{2023_07_14_223496a1d5b88caed160g-5}
+ 	\caption{The collisionless electron plasma wave damping vs wave number for $\alpha=1$ and $Z=10$ (1) and $\alpha=4$ and $Z=40$ (2) in collisionless plasma. Dashed lines correspond to the super-Gaussian distribution function.}
+ 	\label{figure5}
+ \end{figure}
+ 
+ 
+ %----------------------------------------------------------------------------------------
+ \operatorname{Im} \chi_{e}(\omega, k)=  \left.\frac{2 \pi^{2}}{n_{e}} \frac{\omega_{p e}^{2}}{k^{3}} \omega f_{0}\right|_{v=|\omega / k|}
+ %	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+ %----------------------------------------------------------------------------------------
+ +\left.\frac{(2 \pi)^{3 / 2}}{n_{e}} \frac{\omega_{p e}^{2}}{\omega^{3}} v_{T e}^{3} \nu_{e i} f_{0}\right|_{v=0},
+ %	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+ 
+ where $\nu_{e i}^{T}$ is the standard transport electron-ion collision frequency, $\nu_{e i}^{T}=4 \sqrt{2 \pi} Z e^{4} n_{e} \Lambda /\left(3 m_{e} v_{T e}^{3}\right)$. In Fig. 5 the resonant wave damping, which corresponds to the first term in Eq. (14) $\gamma_{p}=\omega_{p e} \operatorname{Im} \chi_{e}\left(\omega_{p}, k\right) / 2$, where $\omega_{p}^{2}=\omega_{p e}^{2}+3 k^{2} v_{T e}^{2}$, is plotted versus wave number.
+ 
+ In view of the important role played by the nonMaxwellian EDF for different laser-plasma coupling processes, an experimental verification of the particular form of these nonequilibrium states is of fundamental importance. Unfortunately there has been no direct evidence supporting the existence of these EDFs in laser-produced plasmas. The strongest confirmation so far is from the microwave experiment $^{19}$ where the Langmuir probe measurements in cold weakly ionized plasma indicated that the isotropic component of the EDF is non-Maxwellian.
+ 
+ The favorable conditions for the existence of nonMaxwellian EDF have been recently achieved in gold disk plasmas ${ }^{6}$ created by powerful Nova laser beams. The experiment involved simultaneous measurements of ion-acoustic and Langmuir fluctuation spectra by Thomson scattering of a $2 \omega$ beam, which led to the accurate prediction of the ionic charge $Z$ and $T_{e}$. Langmuir fluctuations have been measured at relatively large values of $k / k_{\mathrm{D}}$ making the spectra very sensitive to the form of the EDF (here $k$ is the probed wave vector defined by the geometry of the scattering and $k_{\mathrm{D}}$ is the Debye wave number). In addition, the Thomson probe has reached high intensity values up to $10^{15} \mathrm{~W} / \mathrm{cm}^{2}$ giving values for the parameter $\alpha$ up to four, particularly at the late time when the background plasma temperature is low.
+ 
+ In Fig. 2 of Ref. 6 four Langmuir wave spectra have been shown. Three of them, at the later times $t>1.5 \mathrm{~ns}$, have been measured after the heater beams are off and decreasingbackground plasma temperature creates conditions of $\alpha>1$. The theoretical interpretation of the Langmuir wave spectra has been based on the generalized expressions for the scattered power in inhomogeneous plasmas $^{6}$ and the standard model of the dynamical form factor $S(k, \omega),{ }^{20}$
+ 
+ \begin{figure}[htbp]
+ 	\centering
+ 	\includegraphics[max width=0.6\textwidth,max height=1.0\textheight]{2023_07_14_223496a1d5b88caed160g-6}
+ 	\caption{The electron plasma wave fluctuation spectra (in arbitrary units) as a function of the scattered light wavelength in $\AA$. Experimental data (noisy solid line) is taken from Ref. 6 and corresponds to the measurement at $t$ $=2.25$ ns. A Maxwellian fit $\left(T_{e}=750 \mathrm{eV}, n_{e}=5.5 \times 10^{19} \mathrm{~cm}^{-3}\right)$ is given by a dotted line. The dashed line shows a fit with the super-Gaussian EDF (11) and the solid line corresponds to the spectrum calculated with a new nonMaxwellian EDF (13) for the following plasma parameters $m=4, n_{e}=4.5$ $\times 10^{19} \mathrm{~cm}^{-3}, T_{e}=950 \mathrm{eV}, Z=26$.}
+ 	\label{figure6}
+ \end{figure}
+ 
+ 
+ %----------------------------------------------------------------------------------------
+ S(k, \omega)=\frac{2 \pi}{|\boldsymbol{\epsilon}(k, \omega)|^{2}} \int d^{3} v f_{0}(v) \delta(\omega-\mathbf{k} \cdot \mathbf{v}),
+ %	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+ 
+ where $\omega$ is the frequency shift of the scattered from $5026 \AA$ wavelength of the probe and $\epsilon(k, \omega)$ is a plasma dielectric function.
+ 
+ Figure 6 shows the experimental data at $t=2.25 \mathrm{~ns}$ (this is the latest time spectra from Fig. 2 of Ref. 6). All Langmuir wave spectra in Ref. 6 have been interpreted by using a local Maxwellian distribution function for $f_{0}(v)$ in (15) (the dotted line in Fig. 6). The difficulty of trying to reproduce experimental data with a super-Gaussian EDF (11), in spite of $\alpha>1$, is illustrated in Fig. 6. A reduced number of superthermal electrons cannot support the broad Langmuir wave resonance (the dashed line in Fig. 6). However, non-Maxwellian EDF can well reproduce the short wavelength part (5500 $\AA$ $<\lambda<6500 \AA$ ) of the experimental spectrum (cf. Fig. 6) where the scattered power displays a local minimum (this feature of the experimental measurement is also apparent on two other plots, $t=2$ and $1.75 \mathrm{~ns}$, in Fig. 2 of Ref. 6). Theoretically, these local minima are only present for nonequilibrium distribution functions. The combined effect of the large fluctuation levels at the plasma wave resonance and the local minima at the shorter wavelength is well reproduced by our new distribution function as shown in Fig. 6 (solid line). This is the first, "almost", direct measurement showing signatures of the non-Maxwellian distribution functions in laser produced plasmas. In calculating the theoretical spectrum in Fig. 6 we assumed that the symmetric part of the EDF (13) is constant in time.
+ 
+ \section{CONCLUSIONS AND SUMMARY}
+ In this paper, we have revisited the old problem of the temporal evolution of the EDF in laser heated plasmas for the case of moderate intensity laser fields $\left(v_{E} / v_{T e}<1\right.$ and $\left.Z v_{E}^{2} / v_{T e}^{2}>1\right)$. We have confirmed that the bulk of the electron distribution function is well approximated by the superGaussian form with the exponent $m$ varying with laser intensity according to the well-known fit by Matte et al. ${ }^{4}$ However the tail of the electron distribution is much more pronounced and approaches a Maxwellian distribution at velocities much larger than thermal velocity due to the $e-e$ collisions. In the transition region where velocities are slightly higher than the thermal velocity, the EDF is neither the usual super-Gaussian nor Maxwellian. The smaller the ion charge, the closer this transition region (12) is to the electron thermal velocity. This distribution function varies in time with increasing average kinetic energy of electrons due to IB heating. These analytical results have been confirmed using the particle simulation method. In the code the electrons evolve under the influence of a dipole laser field and collisions with like and unlike species. ${ }^{14}$ Our simulations have allowed the description of a smooth transition between the super-Gaussian electron bulk and the Maxwellian tail. We believe that our fit for the electron distribution function (13) can be useful for many practical applications.
+ 
+ In particular, the new EDF shows an increase in the Landau damping for most of the Langmuir waves as compared to results obtained with the super-Gaussian fit. We have interpreted the experimental spectrum of electron plasma wave fluctuations from Thomson scattering measurements. $^{6}$ This provides the first evidence for the existence of non-Maxwellian distribution functions in laserproduced plasmas.
+ \clearpage
+ \section*{References}
+ 	%----------------------------------------------------------------------------------------
+ \end{sloppypar}	
+ \end{document}

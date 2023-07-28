@@ -1,0 +1,613 @@
+%----------------------------------------------------------------------------------------
+  %	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+  %----------------------------------------------------------------------------------------
+  
+  % \documentclass[twoside,twocolumn]{article}
+  \documentclass[oneside,onecolumn]{article}
+  \usepackage{ctex}
+  \usepackage{blindtext} % Package to generate dummy text throughout this template 
+  
+  \usepackage{geometry}
+  %	\geometry{a4paper,centering,scale=0.8}
+  \geometry{a4paper,top=3cm,bottom=3cm,inner=1.2cm,outer=3cm,marginparwidth=1.8cm}
+  
+  \usepackage{amsmath,amsthm,amsfonts,amssymb,bm}
+  %\usepackage{mathptmx}
+  
+  %%\usepackage[sc]{mathpazo} % Use the Palatino font
+  \usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+  \linespread{1.20} % Line spacing - Palatino needs more space between lines
+  \usepackage{microtype} % Slightly tweak font spacing for aesthetics
+  
+  \usepackage[english]{babel} % Language hyphenation and typographical rules
+  
+  \usepackage[small,labelfont=bf,up,up]{caption} % Custom captions under/above floats in tables or figures
+  \usepackage{booktabs} % Horizontal rules in tables
+  
+  \usepackage{lettrine} % The lettrine is the first enlarged letter at the beginning of the text
+  
+  \usepackage{enumitem} % Customized lists
+  \setlist[itemize]{noitemsep} % Make itemize lists more compact
+  
+  \usepackage{abstract} % Allows abstract customization
+  \renewcommand{\abstractnamefont}{\normalfont\bfseries} % Set the "Abstract" text to bold
+  \renewcommand{\abstracttextfont}{\normalfont\small\itshape} % Set the abstract itself to small italic text
+  
+  \usepackage{titlesec} % Allows customization of titles
+  \renewcommand\thesection{\arabic{section}} % arabic numerals for the sections
+  \renewcommand{\thesubsection}{\thesection.\arabic{subsection}}
+  
+  \titleformat{\section}[block]{\large\scshape\centering}{\thesection.}{1em}{} % Change the look of the section titles
+  % \titleformat{\subsection}[block]{\large}{\thesubsection.}{1em}{} % Change the look of the section titles
+  \titleformat{\subsection}[block]{\large\scshape}{\thesubsection.}{1em}{} % Change the look of the section titles
+  
+  \usepackage{fancyhdr} % Headers and footers
+  \pagestyle{fancy} % All pages have headers and footers
+  \fancyhf{} % Clear default header and footer
+  \fancyfoot[C]{\thepage} % Add page number to the center of the footer
+  \renewcommand{\headrulewidth}{0pt}
+  
+  \usepackage{titling} % Customizing the title section
+  \date{}
+  
+  \usepackage[svgnames]{xcolor} % added by Wenyin for color
+  % \usepackage{hyperref} % For hyperlinks in the PDF
+  \usepackage[colorlinks=true,linkcolor=Maroon,anchorcolor=blue,citecolor=RoyalBlue,filecolor=blue,menucolor=blue,runcolor=blue,urlcolor=DodgerBlue]{hyperref} % For hyperlinks in the PDF
+  
+  % for multiple references with dash
+  \usepackage[noadjust]{cite}
+  \renewcommand{\citedash}{--}    % when \usepackage{cite}
+  
+  \usepackage{graphicx}
+  \usepackage[export]{adjustbox}
+  \graphicspath{ {./images/} }
+  
+  \usepackage{amsmath}
+  \usepackage{amsfonts}
+  \usepackage{amssymb}
+  \usepackage{mathrsfs} % for \mathscr
+  \usepackage{booktabs}
+  \usepackage{multirow}
+  \usepackage{ulem}
+  
+  \usepackage[T1]{fontenc}
+  % To use \mdutchcal{ } as \mathcal of package dutchcal, the following commands are needed, from https://imathworks.com/tex/tex-latex-new-locally-defined-mathcal-font-for-math-equations/
+  % Based on the code from mathalpha.sty: 
+  \DeclareFontFamily{U}{dutchcal}{\skewchar \font =45}
+  \DeclareFontShape{U}{dutchcal}{m}{n}{
+  	<-> dutchcal-r}{}
+  \DeclareFontShape{U}{dutchcal}{b}{n}{
+  	<-> dutchcal-b}{}
+  \DeclareMathAlphabet{\mdutchcal}{U}{dutchcal}{m}{n}
+  \SetMathAlphabet{\mdutchcal}{bold}{U}{dutchcal}{b}{n}
+  \DeclareMathAlphabet{\mdutchbcal} {U}{dutchcal}{b}{n}
+  
+  % \usepackage{unicode-math} % for bold math font
+  % \setmathfont{XITS Math}
+  
+  % vector, matrix and tensor
+  % \newcommand{\vect}[1]{\boldsymbol{#1}}
+  % \newcommand{\vect}{\symbf}
+  % \newcommand{\vect}{\mathbf} % works for English letters but not for Greek letters 
+  \newcommand{\vect}[1]{\mathbf{\boldsymbol{#1}}} % works for both English and Greek letters, but it does not work with mathtime pro lite fonts, see https://tex.stackexchange.com/questions/3535/bold-math-automatic-choice-between-mathbf-and-boldsymbol-for-latin-and-greek 
+  % \newcommand{\matr}[1]{\boldsymbol{\mathrm{#1}}} % \matrix is defined in LaTeX2e kernel
+  \newcommand{\tens}[1]{\boldsymbol{\mathrm{#1}}}
+  
+  \usepackage{mathtools} % for $\intertext{text}$
+  
+  % for footnote without number, from https://tex.stackexchange.com/questions/170511/footnotes-without-numbering
+  \let\svthefootnote\thefootnote
+  % \textheight 1in
+  \newcommand\blankfootnote[1]{%
+  	\let\thefootnote\relax\footnotetext{#1}%
+  	\let\thefootnote\svthefootnote%
+  }
+  \let\svfootnote\footnote
+  \renewcommand\footnote[2][?]{%
+  	\if\relax#1\relax%
+  	\blankfootnote{#2}%
+  	\else%
+  	\if?#1\svfootnote{#2}\else\svfootnote[#1]{#2}\fi%
+  	\fi
+  }
+  \usepackage{framed}
+  \usepackage{breqn}
+%  \usepackage{tabu}
+%  \usepackage{supertabular}
+%  \usepackage{tcolorbox}
+%  \tcbuselibrary{skins,breakable,raster}
+  
+  \usepackage{setspace}
+  
+  \usepackage{paracol}
+  \setlength{\columnseprule}{0.5pt}
+  \setlength{\columnsep}{2em}
+  \columnratio{0.4}
+
+  \newcommand\enzhbox[2]{
+	\quad\par \begin{paracol}{2} 
+%		\begin{tcolorbox}[breakable,enhanced jigsaw,nobeforeafter,colback=gray!5!white,colframe=white,
+			% colframe=gray,boxrule=0pt,rightrule=2pt,toprule=1pt,
+%			borderline east={1pt}{-1pt}{black} ,borderline north={1pt}{0pt}{gray},
+%			left=2pt,right=2pt,top=0pt,bottom=0pt] 
+			\begin{spacing}{1.0}
+					\footnotesize  #1
+			\end{spacing}
+			
+%		\end{tcolorbox}
+		\switchcolumn[1] 
+		#2
+	\end{paracol} 
+}
+  
+  %----------------------------------------------------------------------------------------
+  %	TITLE SECTION
+  %----------------------------------------------------------------------------------------
+  
+  \setlength{\droptitle}{-4\baselineskip} % Move the title up
+  
+  \pretitle{\begin{center}\Huge\bfseries} % Article title formatting
+  	\posttitle{\end{center}} % Article title closing formatting
+ \title{激光加热等离子体中的电子分布函数\\ \Large{Electron distribution function in laser heated plasmas}}  \author{E. Fourkal,  V. Yu. Bychenkov,   W. Rozmus et al.}
+  \renewcommand{\maketitlehookd}{%
+  	\begin{abstract}
+ A new electron distribution function has been found in laser heated homogeneous plasmas by an analytical solution to the kinetic equation and by particle simulations. The basic kinetic model describes inverse bremsstrahlung absorption and electron-electron collisions. The non-Maxwellian distribution function is comprised of a super-Gaussian bulk of slow electrons and a Maxwellian tail of energetic particles. The tails are heated due to electron-electron collisions and energy redistribution between superthermal particles and light absorbing slow electrons from the bulk of the distribution function. A practical fit is proposed to the new electron distribution function. Changes to the linear Landau damping of electron plasma waves are discussed. The first evidence for the existence of non-Maxwellian distribution functions has been found in the interpretation, which includes the new distribution function, of the Thomson scattering spectra in gold plasmas [Glenzer et al., Phys. Rev. Lett. 82, 97 (1999)]. (C) 2001 American Institute of Physics.\par
+通过动力学方程的解析解和粒子模拟，在激光加热的均匀等离子体中找到了一个新的电子分布函数。基本动力学模型描述了反韧致辐射吸收和电子-电子碰撞。非麦克斯韦分布函数由超高斯的慢电子和麦克斯韦高能粒子的尾巴组成。由于电子-电子碰撞和超热粒子之间的能量重新分配以及从分布函数的主体中吸收光的慢电子，尾部被加热。对新的电子分布函数提出了一种实用的拟合方法。讨论了电子等离子体波的线性朗道衰减的变化。在对金等离子体中汤姆逊散射谱的解释中发现了非麦克斯韦分布函数存在的第一个证据[Glenzer等人，Phys.莱特牧师。82、97(1999)]。(C)2001年美国物理研究所。
+
+  	\end{abstract}
+  }
+  
+  %----------------------------------------------------------------------------------------
+  
+  \begin{document}
+  \begin{sloppypar}
+  
+  \maketitle
+  
+  
+
+\enzhbox{  [DOI: 10.1063/1.1334611]
+}{
+[DOI：10.1063/1.1334611]
+}
+  
+  \section{引言}
+ \enzhbox{There has been an ongoing interest in the description of an electron distribution function (EDF) in collisionally heated laser plasmas. ${ }^{1-5}$ Since the work by Langdon ${ }^{1}$ it has been known that inverse bremsstrahlung (IB) absorption of powerful lasers in high $Z$ plasmas can result in a nonMaxwellian EDF. These EDFs belong to a family of superGaussian distributions $\approx \exp \left(-v^{\mu}\right)$ (Ref. 4) which can continuously vary from Maxwellian $(\mu=2)$, for $\alpha=Z v_{E}^{2} / v_{T e}^{2}$ $<1$, to a super-Gaussian form with $\mu=5$ for $\alpha \gg 1$ ( $v_{E}$ is the electron quiver velocity in a laser field, $v_{T e}$ is the electron thermal velocity). Such nonequilibrium states can exist in a plasma for $\alpha>1$ because the IB heating rate is sufficienly fast for slow particles so that electron-electron $(e-e)$ collisions cannot restore a Maxwellian EDF.
+}{人们对碰撞加热激光等离子体中的电子分布函数(EDF)的描述一直很感兴趣。自从Landdon ${ }^{1}$的工作以来，人们已经知道，强激光在高$Z$等离子体中的反向韧致辐射(IB)吸收可以导致非麦克斯韦EDF。这些EDF属于超高斯分布$\approx \exp \left(-v^{\mu}\right)$(参考文献4)，它可以连续变化，从$\alpha=Z v_{E}^{2} / v_{T e}^{2}$ $<1$的麦克斯韦$(\mu=2)$到$\alpha \gg 1$的$\mu=5$的超高斯形式($v_{E}$是激光场中的电子抖动速度，$v_{T e}$是电子的热速度)。这种非平衡态可以存在于$\alpha>1$的等离子体中，因为IB的加热速度对于慢粒子来说足够快，以至于电子-电子$(e-e)$碰撞不能恢复麦克斯韦EDF。
+}
+  
+
+\enzhbox{  We have noticed that these results have been obtained from the approximate kinetic models (cf. Refs. 1 and 4) which include an $e-e$ collision operator acting only on the isotropic part of the distribution function and neglect $e-e$ collision terms involving the anisotropic part of the electron distribution function. ${ }^{1,4}$ The omitted terms have a small effect on slow electrons $\left(v<v_{T e}\right)$ which are heated by the laser. However, they cannot be neglected in the description of a high energy part of the EDF, particularly in the transition region between Maxwellian tails of fast electrons and
+}{
+我们注意到，这些结果是从近似动力学模型(参看。参考文献1和4)，它包括只作用于分布函数的各向同性部分的$e-e$碰撞算符，而忽略涉及电子分布函数的各向异性部分的$e-e$碰撞项。省略的项对激光加热的慢电子$\left(v<v_{T e}\right)$的影响很小。然而，在描述EDF的高能部分时，特别是在快电子的麦克斯韦尾部和麦克斯韦尾部之间的过渡区，它们不能被忽略。
+}
+  
+
+\enzhbox{   the super-Gaussian bulk of the EDF. The EDF combining the super-Gaussian form at low electron energies and Maxwellian tails for $v \gg v_{T e}$ constitutes the main new result of this paper. This is a solution to the full kinetic equation, which includes the complete description of $e-e$ collisions in addition to the IB heating term. The EDF is characterized by a time varying scaling velocity in the entire range of particle velocities. The tail electrons increase their average energy due to $e-e$ collisions with slow particles. These results have been confirmed by particle simulations, which have also validated a useful analytical fit to the non-Maxwellian EDF.
+}{
+ EDF的超高斯体。将低能超高斯型与$v \gg v_{T e}$的麦克斯韦尾部相结合的EDF是本文的主要新结果。这是完整动力学方程的解，该方程除了IB加热项外，还包括对$e-e$碰撞的完整描述。EDF的特点是在整个粒子速度范围内具有时变的标度速度。由于$e-e$与慢粒子的碰撞，尾部电子的平均能量增加。这些结果得到了粒子模拟的证实，这也验证了一个对非麦克斯韦EDF有用的解析拟合。
+}
+  
+
+\enzhbox{  The existence of Maxwellian tails for energetic electrons in laser heated EDFs is particularly important for the description of Langmuir waves. Fast electrons determine the damping of Langmuir waves and therefore can play an important role in the evolution of parametric instabilities. The spectra of high frequency electrostatic fluctuations are measurable in Thomson scattering experiments ${ }^{6}$ and are sensitive to the particular form of the EDF. We find that the experimental spectra compare well with theoretical predictions based on the new EDF in a gold plasma. Finally, the transition between the super-Gaussian part of the EDF and the Maxwellian tail can occur at velocities as low as $(2-3) v_{T e}$. These are velocities characterizing heat carrying electrons and therefore the new EDF can also alter thermal transport processes. ${ }^{7}$
+}{
+激光加热的EDF中高能电子的麦克斯韦尾巴的存在对于朗缪尔波的描述尤为重要。快电子决定了朗缪尔波的衰减，因此在参数不稳定性的演化中起着重要的作用。高频静电起伏的光谱在汤姆逊散射实验${ }^{6}$中是可测量的，并且对EDF的特殊形式很敏感。我们发现，在金等离子体中，实验光谱与基于新EDF的理论预测符合得很好。最后，EDF的超高斯部分和麦克斯韦尾巴之间的转换可以在低至$(2-3) v_{T e}$的速度下发生。这些都是载热电子的速度，因此新的EDF也可以改变热传输过程。${ }^{7}$
+}
+  
+
+\enzhbox{  It is well known that a super-Gaussian EDF can lead to a reduced IB heating rate as compared to the Maxwellian distribution. This EDF contains a smaller number of slow elec- trons due to rapid heating of low energy particles by the IB process. At the same time the super-Gaussian EDF reduces plasma wave damping because of the absence of high energy tails. These tails are depleted because the kinetic model studied before in Refs. 1 and 4 does not include $e-e$ collisional terms involving an anisotropic part of the EDF. Deviations from the super-Gaussian distribution functions have been also examined by Chichkov et al. ${ }^{5}$ Using perturbation theory, the authors found large differences as compared to super-Gaussian solutions at high velocities, which led to the breakup of the perturbative expansion and clearly demonstrated the existence of high energy particles. They noticed that because the laser energy absorbed by the fast electrons is much smaller than energy absorbed by the slow electrons, the EDF at high velocities should remain close to Maxwellian due to the $e-e$ collisions between fast and slow particles. However, the approach of Ref. 5 could not provide the electron distribution at high velocities.
+}{
+众所周知，与麦克斯韦分布相比，超高斯EDF可以导致IB加热率降低。由于IB工艺对低能粒子的快速加热，这种EDF含有较少的慢电子。同时，由于没有高能尾部，超高斯EDF减小了等离子体波的衰减。这些尾巴被耗尽，因为以前在文献1和4中研究的动力学模型不包括涉及EDF的各向异性部分的$e-e$碰撞项。Chichkov等人也研究了超高斯分布函数的偏差。利用微扰理论，作者发现在高速下与超高斯解相比有很大的不同，这导致了微扰展开的破裂，并清楚地证明了高能粒子的存在。他们注意到，由于被快电子吸收的激光能量比被慢电子吸收的能量小得多，由于快粒子和慢粒子之间有$e-e$次碰撞，高速的EDF应该保持在接近麦克斯韦的水平。然而，文献5的方法不能提供高速下的电子分布。
+}
+  
+
+\enzhbox{  In the present paper we investigate the time evolution of an electron distribution function using an analytical solution to the Fokker-Planck kinetic equation and particle simulations. We accurately account for the $e-e$ collisional contribution in the equation for the symmetrical part of the electron distribution function which is different from the model used in Refs. 1 and 4. We confirm that the bulk electron distribution function can be well approximated by the superGaussian distribution ${ }^{4}$ depending on the value of the parameter $\alpha$. It is shown that indeed the tail of the distribution function approaches a Maxwellian form due to the $e-e$ collisions. The bulk remains in super-Gaussian form and there is a transition region in velocity space where the distribution function is neither super-Gaussian nor Maxwellian. The particle simulations confirm such a form of the distribution function for arbitrary values of the parameter $\alpha$ and allow finding a fit for the entire range of electron energies.
+}{
+本文利用Fokker-Planck动力学方程的解析解和粒子模拟研究了电子分布函数的时间演化。我们在电子分布函数的对称部分的方程中准确地考虑了$e-e$碰撞贡献，这与文献1和4中使用的模型不同。我们确认，根据参数$\alpha$的取值，体电子分布函数可以很好地用超高斯分布${ }^{4}$来近似。结果表明，由于$e-e$次碰撞，分布函数的尾部确实接近麦克斯韦形式。块体仍然保持超高斯形式，在速度空间中存在一个过渡区，在那里分布函数既不是超高斯的也不是麦克斯韦的。粒子模拟确认了参数$\alpha$的任意值的这种分布函数的形式，并允许找到适合整个电子能量范围的分布函数。
+}
+
+
+\enzhbox{
+The paper is organized as follows. Section II presents a derivation of the equation for the symmetrical part of the electron distribution function in a homogeneous plasma heated by a dipole electromagnetic field with $e-e$ collisions taken into account. A self-similar solution to the EDF is discussed in Sec. III. Section IV describes particle simulations and gives a fit for EDF in the entire range of electron energies. Section $\mathrm{V}$ deals with the damping of electron plasma waves and electron plasma wave fluctuation spectra which compares well with observations from Thomson scattering. ${ }^{6}$ We conclude with a discussion and summary in Sec. VI.
+}{
+这篇论文的组织方式如下。第二节给出了在考虑$e-e$碰撞的情况下，均匀等离子体中偶极电磁场加热的电子分布函数的对称部分方程的推导。在SEC中讨论了EDF的一种自相似解。第四节描述了粒子模拟，并给出了EDF在整个电子能量范围内的适用性。第$\mathrm{V}$节讨论了电子等离子体波的衰减和电子等离子体波的涨落谱，这与汤姆森散射的观测结果相吻合。最后，我们在美国证券交易委员会进行了讨论和总结。六、六、
+}
+  
+  \section{电子分布函数对称部分的动力学方程}
+
+\enzhbox{  We start from the Fokker-Planck kinetic equation for the electron distribution function $f$ in a homogeneous high- $Z$ plasma in a presence of a high frequency electric field $\mathbf{E}$ $=\mathbf{E}_{0} \cos \omega_{0} t$,
+}{
+我们从存在高频电场$\mathbf{E}$ $=\mathbf{E}_{0} \cos \omega_{0} t$的均匀的高$Z$等离子体中电子分布函数$f$的福克-普朗克动力学方程出发，
+}
+  
+  \begin{equation}
+  \frac{\partial f}{\partial t}+\frac{e \mathbf{E}}{m} \cdot \frac{\partial f}{\partial \mathbf{v}}=C_{i e}(f)+C_{e e}(f, f),
+  \end{equation}
+  
+
+\enzhbox{  where $C_{i e}(f)$ and $C_{e e}(f, f)$ are the electron-ion and electron-electron collision integrals. For a moderate field intensity, $v_{E} / v_{T e}<1$, the anisotropic part of an electron distribution function $f_{1}=f-f_{0}$ is small as compared to the symmetrical part $f_{0}$ and therefore can be determined from Eq. (1) by using a perturbative approach
+}{
+其中$C_{i e}(f)$和$C_{e e}(f, f)$是电子-离子和电子-电子碰撞积分。对于中等场强$v_{E} / v_{T e}<1$，与对称部分$f_{0}$相比，电子分布函数$f_{1}=f-f_{0}$的各向异性部分较小，因此可以通过使用微扰方法从公式(1)中确定
+}
+  
+  \begin{equation}
+  \begin{gathered}
+  	f_{1}=  -\frac{\mathbf{v}_{\mathbf{E}} \cdot \mathbf{v}}{v} \frac{\partial f_{0}}{\partial v} \sin \omega_{0} t\\+\frac{\cos \omega_{0} t}{\omega_{0}}\left[\nu_{e i} \frac{\mathbf{v}_{\mathbf{E}} \cdot \mathbf{v}}{v} \frac{\partial f_{0}}{\partial v}\right.
+  \left.-C_{e e}\left(f_{0}, \frac{\mathbf{v}_{\mathbf{E}} \cdot \mathbf{v}}{v} \frac{\partial f_{0}}{\partial v}\right)-C_{e e}\left(\frac{\mathbf{v}_{\mathbf{E}} \cdot \mathbf{v}}{v} \frac{\partial f_{0}}{\partial v}, f_{0}\right)\right] .
+  \end{gathered}
+  \end{equation}
+
+  
+
+\enzhbox{  Here $\nu_{e i}(v)=4 \pi Z n_{e} e^{4} \Lambda / m_{e}^{2} v^{3}$ is the usual velocitydependent $e-i$ collision frequency, $\Lambda$ is the Coulomb logarithm, and $e, m_{e}$, and $n_{e}$ are the electron charge, mass, and density, respectively.
+}{
+这里，$\nu_{e i}(v)=4 \pi Z n_{e} e^{4} \Lambda / m_{e}^{2} v^{3}$是通常的速度相关的$e-i$碰撞频率，$\Lambda$是库仑对数，$e, m_{e}$和$n_{e}$分别是电子电荷、质量和密度。
+}
+  
+
+
+\enzhbox{ Expression (2) represents the fast varying anisotropic part of the electron distribution function. Substituting (2) into the kinetic equation (1) and averaging over the electric field oscillation period, $1 / \omega_{0}$, we obtain the following equation for the slowly varying symmetrical distribution function:
+}{
+表达式(2)表示电子分布函数的快速变化的各向异性部分。将(2)代入动力学方程(1)，并在电场振荡周期$1 / \omega_{0}$上求平均，我们得到了关于缓慢变化的对称分布函数的以下方程：
+}
+  
+  \begin{dmath}
+  \frac{\partial f_{0}}{\partial t}=  \frac{v_{E}^{2}}{6 v^{2}} \frac{\partial}{\partial v}\left(v^{2} \nu_{e i} \frac{\partial f_{0}}{\partial v}\right)+C_{e e}\left(f_{0}, f_{0}\right)
+  -\frac{v_{E}^{2}}{6 v^{2}} \frac{\partial}{\partial v} v^{2}\left[C_{e e}\left(f_{0}, \frac{\partial f_{0}}{\partial v}\right)+C_{e e}\left(\frac{\partial f_{0}}{\partial v}, f_{0}\right)\right]
+  -\frac{v_{E}^{2}}{2} C_{e e}\left(\frac{\partial f_{0}}{\partial v}, \frac{\partial f_{0}}{\partial v}\right) .
+  \end{dmath}
+ 
+
+  
+
+\enzhbox{  Electron-electron collisional operators on the right-hand side of Eq. (3) can be written in the explicit form in accordance with Ref. 8:
+}{
+公式(3)右侧的电子-电子碰撞算符可以按照文献8的显式形式写成：
+}
+  
+  \begin{equation*}
+  C_{e e}\left(f_{0}, f_{0}\right)=\frac{Y}{v^{2}} \frac{\partial}{\partial v}\left[f_{0} I_{0}^{0}+\frac{v}{3}\left(I_{2}^{0}+J_{-1}^{0}\right) \frac{\partial f_{0}}{\partial v}\right],
+  \end{equation*}
+  \begin{dmath}
+  C_{e e}\left(\frac{\partial f_{0}}{\partial v}, \frac{\partial f_{0}}{\partial v}\right)=\frac{Y}{3 v^{2}} \frac{\partial}{\partial v}\left[-\frac{\partial^{2} f_{0}}{\partial v^{2}} I_{2}^{0}+\frac{\partial f_{0}}{\partial v}\right.
+  \left.\times\left(4 \pi v^{2} f_{0}+\frac{1}{v}\left(I_{2}^{0}-3 I_{0}^{0}\right)\right)\right]
+  \end{dmath}
+
+  \begin{dmath*}
+  C_{e e}\left(f_{0}, \frac{\partial f_{0}}{\partial v}\right)+C_{e e}\left(\frac{\partial f_{0}}{\partial v}, f_{0}\right)=\frac{Y}{3 v} \frac{\partial^{3} f_{0}}{\partial v^{3}}\left(I_{2}^{0}+J_{-1}^{0}\right)
+  +\frac{Y}{3 v^{2}} \frac{\partial^{2} f_{0}}{\partial v^{2}}\left(3 I_{0}^{0}-4 I_{2}^{0}+2 J_{-1}^{0}\right)+\frac{Y}{3 v^{3}} \frac{\partial f_{0}}{\partial v}
+  \times\left(-6 I_{0}^{0}+4 I_{2}^{0}-2 J_{-1}^{0}\right)+8 \pi Y \frac{\partial f_{0}}{\partial v} f_{0},
+  \end{dmath*}
+
+  
+
+\enzhbox{  where $Y=4 \pi n_{e} e^{4} \Lambda / m_{e}^{2}, \Lambda$ is the Coulomb logarithm and
+}{
+其中$Y=4 \pi n_{e} e^{4} \Lambda / m_{e}^{2}, \Lambda$是库仑对数，并且
+}
+  
+  \begin{equation*}
+  I_{j}^{i}=\frac{4 \pi}{v^{j}} \int_{0}^{v} f_{i} v^{2+j} d v, \quad J_{j}^{i}=\frac{4 \pi}{v^{j}} \int_{v}^{\infty} f_{i} v^{2+j} d v .
+  \end{equation*}
+  
+
+\enzhbox{  By neglecting in Eq. (3) terms proportional to $v_{E}^{2} C_{e e}$, which originate from $e-e$ collisions involving the anisotropic part of the EDF, we can reduce (3) to the model equation analyzed in Refs. 1 and 4. However, all of the $e-e$ collision terms in Eq. (3) are important for the correct description of the electron distribution function at large velocities $(v$ $>v_{T e}$ ). Note also that Eq. (2.3) of Ref. 9, which is the kinetic equation for the symmetric part of the distribution function, is missing terms $\propto v_{E}^{2}\left[C_{e e}\left(f_{0}, \partial f_{0} / \partial v\right)\right.$ $\left.+C_{e e}\left(\partial f_{0} / \partial v, f_{0}\right)\right]$.
+}{
+通过忽略公式(3)中与$v_{E}^{2} C_{e e}$成正比的项，它源于涉及EDF各向异性部分的$e-e$碰撞，我们可以将(3)简化为文献1和4中分析的模型方程。然而，公式(3)中的所有$e-e$碰撞项对于正确描述大速度下的电子分布函数是重要的($(v$ $>v_{T e}$)。另请注意，文献9的公式(2.3)是分布函数对称部分的动力学方程，缺少$\propto v_{E}^{2}\left[C_{e e}\left(f_{0}, \partial f_{0} / \partial v\right)\right.$ $\left.+C_{e e}\left(\partial f_{0} / \partial v, f_{0}\right)\right]$项。
+}
+  
+  \section{电子分布函数}
+
+\enzhbox{  We use the standard definition for the electron density, $n_{e}$, thermal velocity, $v_{T e}$, and electron temperature, $T_{e}$ :
+}{
+我们使用电子密度$n_{e}$、热速度$v_{T e}$和电子温度$T_{e}$的标准定义：
+}
+  
+  \begin{equation}
+  n_{e}=4 \pi \int v^{2} f_{0} d v, \quad v_{T e}^{2}=\frac{4 \pi}{3 n_{e}} \int v^{4} f_{0} d v \equiv \frac{T_{e}}{m_{e}} .
+  \end{equation}
+  
+
+\enzhbox{  Multiplying Eq. (1) by $v^{2}$ and integrating over the entire velocity range one obtains an equation for the time evolution of the electron temperature
+}{
+将公式(1)乘以$v^{2}$，并在整个速度范围内积分，得到电子温度随时间演化的方程
+}
+  
+  \begin{equation}
+  \frac{\partial T_{e}}{\partial t}=\frac{4 \pi Z Y}{9 n_{e} m_{e}} v_{E}^{2} f_{0}(0, t),
+  \end{equation}
+  
+
+\enzhbox{  which demonstrates that the heating rate is entirely defined by very slow electrons $\left[f_{0}(0, t) \equiv f_{0}(v=0, t)\right]$. For times much longer than the $e-e$ collision time we look for a solution to the electron distribution function in the following form:
+}{
+这表明加热率完全由非常慢的电子$\left[f_{0}(0, t) \equiv f_{0}(v=0, t)\right]$定义。对于比$e-e$碰撞时间长得多的时间，我们寻找以下形式的电子分布函数的解：
+}
+  
+  \begin{equation}
+  f_{0}=\frac{n}{(2 \pi)^{3 / 2} v_{T e}(t)^{3}} \phi\left(\frac{v}{v_{T e}(t)}, t\right),
+  \end{equation}
+  
+
+\enzhbox{  where $v_{T e}(t)$ grows in time according to Eq. (6). By introducing a dimensionless velocity $x=v / v_{T e}(t)$, the equation for $\phi(x)$ can be written in the following form:
+}{
+其中$v_{T e}(t)$根据公式(6)在时间上增长。通过引入无量纲速度$x=v / v_{T e}(t)$，$\phi(x)$的方程可以写成以下形式：
+}
+  
+
+  \begin{equation}
+  	\begin{gathered}
+  		\phi I_{0}^{0}  +\frac{x}{3} \frac{\partial \phi}{\partial x}\left(I_{2}^{0}+J_{-1}^{0}\right)+\frac{\alpha}{6 x}\left[\frac{\partial \phi}{\partial x}+\sqrt{\frac{2}{\pi}} \frac{x^{4}}{3} \phi \phi(0)\right]\\\quad
+  -\frac{\alpha}{6 Z}\left[\frac{x}{3} \frac{\partial^{3} \phi}{\partial x^{3}}\left(I_{2}^{0}+J_{-1}^{0}\right)+\frac{\partial^{2} \phi}{\partial x^{2}}\left(I_{0}^{0}-\frac{7}{3} I_{2}^{0}+\frac{2}{3} J_{-1}^{0}\right)\right.\\\quad
+  \left.+\frac{1}{x} \frac{\partial \phi}{\partial x}\left(-5 I_{0}^{0}+\frac{7}{3} I_{2}^{0}-\frac{2}{3} J_{-1}^{0}\right)+3 \sqrt{\frac{8}{\pi} x^{2}} \frac{\partial \phi}{\partial x} \phi\right]=0,
+  	\end{gathered}
+  \end{equation}
+
+  
+
+\enzhbox{  where $I_{0}^{0}=\sqrt{2 / \pi} \int_{0}^{x} \phi x^{2} d x, \quad I_{2}^{0}=\sqrt{2 / \pi} x^{-2} \int_{0}^{x} \phi x^{4} d x$, and $J_{-1}^{0}=\sqrt{2 / \pi} x \int_{x}^{\infty} \phi x d x$. We have neglected the terms proportional to $\partial \phi / \partial t$ in deriving Eq. (8). We assume that these terms are small after the initial time corresponding to few $e-e$ collision times. In Eq. (8) the term proportional to $\alpha / x$ describes IB heating while all the others (with and without the factor $\alpha$ ) are due to $e-e$ collisions. The interplay between IB heating and $e-e$ collisional relaxation determines the electron distribution function in the entire range of electron velocities. The function $\phi(x)$ in Eq. (8) satisfies two integral relations,which originate from definitions of the electron density and thermal energy (5).
+}{
+其中$I_{0}^{0}=\sqrt{2 / \pi} \int_{0}^{x} \phi x^{2} d x, \quad I_{2}^{0}=\sqrt{2 / \pi} x^{-2} \int_{0}^{x} \phi x^{4} d x$和$J_{-1}^{0}=\sqrt{2 / \pi} x \int_{x}^{\infty} \phi x d x$。在推导公式(8)时，我们忽略了与xx002成比例的项。我们假设这些项在初始时间之后较小，对应于较少的$e-e$碰撞时间。在公式(8)中，与$\alpha / x$成正比的术语描述了IB加热，而所有其他的(有或没有因数$\alpha$)都是由于$e-e$碰撞。IB加热和$e-e$碰撞弛豫之间的相互作用决定了整个电子速度范围内的电子分布函数。式(8)中的函数$\phi(x)$满足两个积分关系，它们源于电子密度和热能(5)的定义。
+}
+  
+  \begin{equation}
+  \int_{0}^{\infty} x^{2} \phi d x=\sqrt{\pi / 2}, \quad \int_{0}^{\infty} x^{4} \phi d x=3 \sqrt{\pi / 2},
+  \end{equation}
+  
+  \begin{figure}[tbp]
+  	\centering
+  	\includegraphics[max width=0.6\textwidth,max height=1.0\textheight]{2023_07_14_223496a1d5b88caed160g-3}
+  	\caption{\uline{Solutions to the kinetic equation (10) for $\alpha=0.5$ (1), and $\alpha=3$ (2), represented by solid lines as compared to the super-Gaussian fit (11).}\\$\alpha=0.5$(1)和$\alpha=3$(2)的动力学方程(10)的解，与超高斯拟合(11)相比，用实线表示。}
+  	\label{figure1}
+  \end{figure}
+
+  
+
+\enzhbox{  The term proportional to $Z^{-1}$ in Eq. (8) which originated from the anisotropic part of the $e-e$ collision operator can be neglected for electrons from a bulk of the distribution function $(x \leqq 1)$. For such a case the equation for $\phi$ (8) and integral relations defining $I_{0}^{0}, I_{2}^{0}$, and $J_{-1}^{0}$ can be rewritten as a system of four first-order ordinary nonlinear differential equations:
+}{
+对于来自分布函数$(x \leqq 1)$的大量电子，可以忽略源于$e-e$碰撞算符的各向异性部分的项与公式(8)中的$Z^{-1}$成正比。在这种情况下，$\phi$(8)的方程以及定义$I_{0}^{0}, I_{2}^{0}$和$J_{-1}^{0}$的积分关系可以改写为四个一阶常非线性微分方程组：
+}
+
+  \begin{equation}
+  	\begin{gathered}
+  		\frac{\alpha}{6} \frac{d \phi}{d x}+\sqrt{\frac{2}{\pi}} \frac{\alpha}{18} x^{4} \phi(0) \phi+x I_{0}^{0} \phi
+  +\left(\frac{1}{3} x^{2} I_{2}^{0}(x)+\frac{x^{2}}{3} J_{-1}^{0}\right) \frac{d \phi}{d x}=0, \\
+  \frac{d I_{0}^{0}}{d x}=\sqrt{\frac{2}{\pi}} x^{2} \phi, \quad
+  \frac{d\left(x^{2} I_{2}^{0}\right)}{d x}=\sqrt{\frac{2}{\pi}} x^{4} \phi,\quad
+  \frac{d\left(J_{-1}^{0} / x\right)}{d x}=-\sqrt{\frac{2}{\pi}} x \phi
+  	\end{gathered}
+  \end{equation}
+
+
+\enzhbox{  The system of equations given by (10) has been solved numerically using the MATHEMATICA program, ${ }^{10}$ giving results that are similar to distribution functions obtained by numerical simulations in Ref. 11. We have found solutions for different values of the parameter $\alpha$. Figure 1 shows electron distribution functions for $\alpha=0.5$ and 3 in comparison with the super-Gaussian fit which has been obtained from the numerical solution to the Fokker-Planck kinetic equation, ${ }^{4}$
+}{
+文(10)中给出的方程组已用数学程序进行了数值求解，给出了与文献11中数值模拟得到的分布函数类似的结果。我们已经找到了参数$\alpha$的不同值的解。图1显示了$\alpha=0.5$和${ }^{4}$的电子分布函数与从Fokker-Planck动力学方程${ }^{4}$的数值解获得的超高斯拟合的比较
+}
+  
+  \begin{dmath}
+  \phi(x)=\phi_{0} e^{-\left(x / x_{0}\right)^{m}}=  3 \sqrt{\frac{\pi}{2}} \frac{m \Gamma(5 / m)^{3 / 2}}{(3 \Gamma(3 / m))^{5 / 2}}\times \exp \left[-\left(\frac{x}{x_{0}}\right)^{m}\right],
+  \end{dmath}
+
+  
+
+\enzhbox{  where
+}{
+其中
+}
+  
+  \begin{equation*}
+  x_{0}=\left(\frac{3 \Gamma(3 / m)}{\Gamma(5 / m)}\right)^{1 / 2}, \quad m=2+\frac{3}{1+1.66 / \alpha^{0.724}} .
+  \end{equation*}
+  
+
+\enzhbox{  As one can see the super-Gaussian fit (11) gives a good approximation for the bulk electrons of the laser heated distribution function. Note that the different fit has also been proposed to the solution of Eq. (10) in Ref. 12. It has a different functional form but similar accuracy to the results of Matte et al. ${ }^{4}$
+}{
+可以看出，超高斯拟合(11)给出了激光加热分布函数的体电子的一个很好的近似。请注意，文献12中公式(10)的解也提出了不同的拟合度。它具有不同的函数形式，但精度与Matte等人的结果相似。${ }^{4}$
+}
+  
+
+\enzhbox{  However, in order to describe the evolution of an electron distribution in the entire region of particle velocities one has to include proper electron-electron collisional terms and solve the kinetic equation (8). We find the validity condition for the approximation leading to Eq. (8) by comparing $e-e$ collision terms omitted in (10) with the IB heating term. This gives
+}{
+然而，为了描述整个粒子速度区域中电子分布的演化，必须包括适当的电子-电子碰撞项并求解动力学方程(8)。通过比较(10)中省略的$e-e$碰撞项和IB加热项，我们得到了导致公式(8)的近似的有效条件。这给了我们
+}
+  
+  \begin{equation}
+  v / v_{T e}<x^{*} \equiv Z^{1 / 2(m-1)}\left[\frac{3 \Gamma(3 / m)}{\Gamma(5 / m)}\right]^{m / 4(m-1)}, \quad \alpha \gtrsim 1,
+  \end{equation}
+  
+
+\enzhbox{  which defines energies of particles described by the superGaussian distribution function (11). For example, if $m=5,{ }^{1}$ condition (12) reads $v<(2-2.5) v_{T e}$ for $Z=10-40$. For velocities larger than $v_{T e} X^{*}$ (12), the $e-e$ collision operators will dominate the heating term thus redistributing electron tails toward the Maxwellian. The laser energy absorbed directly by fast electrons is much smaller than the energy absorbed by the bulk electrons and their distribution is close to Maxwellian. However, the characteristic temperature of the tail is increasing simultaneously with the slow electron energy due to $e-e$ collisions between fast and slow particles.
+}{
+它定义了由超高斯分布函数(11)描述的粒子的能量。例如，如果$m=5,{ }^{1}$条件(12)读取$Z=10-40$的$v<(2-2.5) v_{T e}$。对于大于$v_{T e} X^{*}$(12)的速度，$e-e$碰撞算符将主导加热项，从而向麦克斯韦重新分配电子尾巴。快电子直接吸收的激光能量远小于体电子吸收的能量，并且它们的分布接近麦克斯韦分布。然而，由于$e-e$快粒子和慢粒子之间的碰撞，尾部的特征温度与慢电子能量同步增加。
+}
+  
+  \section{粒子模拟}
+
+\enzhbox{  Kinetic simulations of the laser heated EDF in homogeneous plasmas have been performed using a particle code. Collisions between electrons and ions, and electrons and electrons have been introduced using the binary collision model by a Monte Carlo method, ${ }^{13,14}$ which conserves particle number, energy, and momentum. No self-consistent fields are included into the numerical model, which provides an efficient alternative to the usual Fokker-Planck simulations. By using a two temperature relaxation problem as a test we have found very good agreement between the results from the Fokker-Planck code with exact nonlinear $e-e$ collisional term ${ }^{15}$ and our particle code.
+}{
+利用粒子程序对均匀等离子体中激光加热的EDF进行了动力学模拟。用守恒粒子数、能量和动量的蒙特卡罗方法${ }^{13,14}$，在二元碰撞模型中引入了电子与离子、电子与电子之间的碰撞。数值模式中没有包含自洽场，这为通常的福克-普朗克模拟提供了一种有效的替代方法。以双温度弛豫问题为例，我们发现用精确的非线性$e-e$碰撞项${ }^{15}$的Fokker-Planck程序与我们的粒子程序的结果符合得很好。
+}
+  
+
+\enzhbox{  The particle velocity and position are changed during each time step due to both the electric dipole pump field and scattering on other particles. Simulations start from a given initial electron distribution function, which is often taken to be a nonequilibrium EDF. We illustrate our findings by discussing results of the particular example where the laser frequency $\omega_{0}$ is chosen to be equal to $6 \omega_{p e}$. In order to decrease the computation time, we have used relatively high thermal $e-i$ collision frequency, $\nu_{e i}\left(v_{T e}\right) / \omega_{p e}=0.05$, and the ratio between the initial quiver and electron thermal velocities at $t=0$ has been chosen $1 / 4<v_{E}^{2} / v_{T e}^{2}<1 / 2$. The total number of particles, electrons, and ions is 256000 , so that the electron distribution function can be resolved in the velocity range $0<v / v_{T e}(t)<6$.
+}{
+在每个时间步长内，由于电偶极子泵浦和对其他粒子的散射，粒子的速度和位置都发生了变化。模拟从一个给定的初始电子分布函数开始，它通常被认为是一个非平衡的EDF。我们通过讨论激光频率$\omega_{0}$被选择为$6 \omega_{p e}$的特定例子的结果来说明我们的发现。为了减少计算时间，我们使用了相对较高的热$e-i$碰撞频率$\nu_{e i}\left(v_{T e}\right) / \omega_{p e}=0.05$，并且选择了$t=0$处的初始抖动速度与电子热速度之比$1 / 4<v_{E}^{2} / v_{T e}^{2}<1 / 2$。粒子、电子和离子的总数为256000，因此电子分布函数可以在$0<v / v_{T e}(t)<6$的速度范围内求解。
+}
+  
+
+\enzhbox{  First, we have calculated an electron heating rate. Figure 2 shows an electron temperature normalized to its initial value versus time. The plot demonstrates that the heating rate changes with time. This is understandable since the heating rate depends on the form of the EDF, which changes in time as well. The initial heating rate is the largest. As the distri-bution function evolves toward the super-Gaussian and the depletion of the number of slow electrons occurs, the plasma heating rate decreases. We have also plotted in Fig. 2 the heating rate which is predicted by Eq. (6) with $f_{0}$ given by the solution to Eq. (10). There is a good agreement between particle simulations and the theory.
+}{
+首先，我们计算了电子加热率。图2显示了归一化为其初值的电子温度随时间的变化。曲线图显示了加热率随时间的变化。这是可以理解的，因为加热率取决于EDF的形式，EDF的形式也随着时间的变化而变化。初始升温速率最大。随着分布函数向超高斯型演化和慢电子数的耗尽，等离子体加热率降低。我们还在图2中画出了由公式(6)预测的升温速度，以及由公式(10)的解给出的$f_{0}$。粒子模拟与理论之间有很好的一致性。
+}
+  
+  \begin{figure}[tbp]
+  	\centering
+  	\includegraphics[max width=0.6\textwidth,max height=1.0\textheight]{2023_07_14_223496a1d5b88caed160g-4}
+  	\caption{\uline{The electron temperature (solid line) from particle simulation in comparison with a theoretical result for the heating rate given by Eq. (11) (dashed line) in a plasma with $Z=40$ and $\alpha(0)=4.8$.}\\粒子模拟得到的电子温度(实线)与公式(11)(虚线)在$Z=40$和$\alpha(0)=4.8$等离子体中给出的升温速率的理论结果进行了比较。}
+  	\label{figure2}
+  \end{figure}
+  
+  
+
+\enzhbox{  In Fig. 3 we plot the EDF at the time when, after the initial transient, the distribution reaches a self-similar form. Simulations show that the bulk of the EDF evolves quickly toward the super-Gaussian form, but the slowly varying tail of the EDF contains significantly more particles than predicted by Eq. (11). For $v \gg v_{T e}$ the tail reaches a Maxwellian form with a temperature defined by Eq. (6), in good agreement with theory. Based on our simulation results we propose a fit for the EDF which modifies the well-known expression (11) in order to describe high energy tails. Mainly we introduce a velocity dependence into fitting parameters $m$ and $x_{0}$ :such that at $x \ll x^{*}, m(x)=m$ and $x_{0}(x)=x_{0}$. Expressions (11), (6) with a new definition of $m$ (13) give the superGaussian distribution at thermal velocities and describe well the transition to the Maxwellian tail at high velocities. We have found very good agreement between (13) and the simulation results. The evolution of $x^{*}$ is shown in Fig. 4 . In the dimensional form, $v_{T e} X^{*}$ increases in time a little faster than thermal velocity (cf. Fig. 4).
+}{
+在图3中，我们绘制了在初始瞬变之后，分布达到自相似形式时的EDF。模拟表明，EDF的大部分迅速向超高斯形式演化，但EDF的缓慢变化尾部包含的粒子比公式(11)预测的要多得多。对于$v \gg v_{T e}$，尾巴达到麦克斯韦形式，其温度由公式(6)定义，与理论很好地一致。基于我们的模拟结果，我们提出了一个适用于EDF的公式，它修改了众所周知的表达式(11)，以描述高能尾部。我们主要在拟合参数$m$和$x_{0}$中引入了速度依赖关系：在$x \ll x^{*}, m(x)=m$和$x_{0}(x)=x_{0}$处。新定义为$m$(13)的表达式(11)、(6)给出了热速度下的超高斯分布，并很好地描述了在高速下向麦克斯韦尾部的转变。我们发现(13)与模拟结果有很好的一致性。图4显示了$x^{*}$的演化过程。在维度形式中，$v_{T e} X^{*}$在时间上的增长略快于热速度(参见。图4)。
+}
+
+  \begin{figure}[tbp]
+  	\centering
+  	\includegraphics[max width=0.45\textwidth,max height=1.0\textheight]{2023_07_14_223496a1d5b88caed160g-4(1)}
+  	\caption{\uline{The time averaged electron distribution function from the particle simulation (the solid line in the top panel and line 1 in the bottom panel) vs velocity ( $\alpha=3.1$ ) when the EDF is already in a self-similar form ( $Z$ =30). The dashed line in the top panel represents the Maxwellian distribution and the super-Gaussian distribution (13) is shown as a dot-dashed curve in the top panel and curve 2 in the bottom panel.}\\当EDF已经处于自相似形式($Z$=30)时，粒子模拟的时间平均电子分布函数(顶部面板中的实线和底部面板中的线1)随速度($\alpha=3.1$)的变化。顶部面板中的虚线表示麦克斯韦分布，超高斯分布(13)在顶部面板中显示为点虚线曲线，在底部面板中显示为曲线2。}
+  	\label{figure3}
+  \end{figure}
+  
+  \begin{figure}[tbp]
+  	\centering
+  	\includegraphics[max width=0.6\textwidth,max height=1.0\textheight]{2023_07_14_223496a1d5b88caed160g-5(1)}
+  	\caption{\uline{Evolution of $x^{*}$ [Eq. (12)] for $\alpha(0)=4.8$ and $Z=40$ (1) and $\alpha(0)$ $=0.6$ and $Z=5(2)$.}\\$\alpha(0)=4.8$和$Z=40$(1)以及$\alpha(0)$ $=0.6$和$Z=5(2)$的$x^{*}$[公式(12)]的演变。}
+  	\label{figure4}
+  \end{figure}
+  
+  \begin{equation}
+  \begin{gathered}
+  	\phi(x)=\phi_{0} e^{-\left(x / x_{0}(x)\right)^{m(x)}},\\
+  m(x)=2+\frac{m-2}{1+\left(x / x^{*}\right)^{9}}, \quad x_{0}(x)=x_{0}(m(x))
+  \end{gathered}
+  \end{equation}
+
+  
+  
+  \section{电子等离子体波的衰减和涨落谱}
+
+\enzhbox{  Non-Maxwellian EDFs affect many processes in laserproduced plasmas. In particular, they can reduce the rate of laser light absorption, modify thermal transport, or reduce damping on Langmuir waves and therefore change the evolution of parametric instabilities involving electron plasma waves. The new solutions discussed in this paper are varying in time and therefore can be applied to the descriptions of processes which are faster than the IB heating rate.
+}{
+非麦克斯韦掺铒光纤影响激光产生的等离子体中的许多过程。特别是，它们可以降低激光的光吸收速率，改变热传输，或减少朗缪尔波的衰减，从而改变涉及电子等离子体波的参数不稳定性的演化。本文讨论的新解是随时间变化的，因此可以应用于描述比IB加热速度更快的过程。
+}
+  
+
+\enzhbox{  In order to fully understand the impact of nonMaxwellian EDFs on the long time scale, when transport processes may be as equally important as the IB heating, one needs to examine the effect of plasma inhomogeneity. Such simulations $^{4}$ have shown that the EDF reaches quasistationary state without changing its functional form, which is well approximated by a fit quoted in Eq. (11). However, the kinetic model in Ref. 4 omits $e-e$ collision terms which are important for the formation of energetic electron tails. Thus, it is likely that a more complete theory of inhomogeneous plasmas will produce quasistationary EDF with tails of fast electrons, particularly in view of the strong experimental evidence from Thomson scattering spectra as described in the following. For similar reasons more recent Fokker-Planck simulations in the geometry relevant to random phase plate laser beams are likely underestimating the importance of tails and overestimating the reduction of Langmuir wave damping. ${ }^{16}$ In fact the tails in the non-Maxwellian EDF have been theoretically predicted in the model calculations relevant to inhomogeneous underdense plasmas in the presence of only electron-ion collisions. ${ }^{17}$ These tails display powerlike dependence on electron velocity.It is straightforward to show that the new EDF based on expressions (11) and (13) increases Langmuir wave damping as compared to a simple super-Gaussian fit (11). The changes due to the non-Maxwellian distribution function occur mostly in an imaginary part of the electron susceptibility $\chi_{e}(\omega, k)$, which can be approximated by the following formula: ${ }^{18}$
+}{
+为了在长时间尺度上充分理解非麦克斯韦EDF的影响，当输运过程可能与IB加热一样重要时，人们需要检查等离子体不均匀的影响。这样的模拟$^{4}$表明，EDF在不改变其泛函形式的情况下达到准静态，这与公式(11)中引用的拟合很好地吻合。然而，文献4中的动力学模型省略了对形成高能电子尾很重要的$e-e$碰撞项。因此，一个更完整的非均匀等离子体理论很可能会产生带有快电子尾巴的准稳定EDF，特别是考虑到来自汤姆森散射光谱的强有力的实验证据，如下所述。由于类似的原因，最近在与随机位相板激光光束相关的几何学中的Fokker-Planck模拟很可能低估了尾部的重要性，而高估了朗缪尔波衰减的减少。事实上，在只存在电子-离子碰撞的非均匀低密度等离子体的模型计算中，已经从理论上预测了非麦克斯韦EDF中的尾部。与简单的超高斯拟合相比，基于表达式(11)和(13)的新的EDF增加了朗缪尔波的衰减。由于非麦克斯韦分布函数引起的变化主要发生在电子磁化率$\chi_{e}(\omega, k)$的虚部中，其可以通过以下公式来近似：${ }^{18}$
+}
+  
+  \begin{figure}[tbp]
+  	\centering
+  	\includegraphics[max width=0.6\textwidth,max height=1.0\textheight]{2023_07_14_223496a1d5b88caed160g-5}
+  	\caption{\uline{The collisionless electron plasma wave damping vs wave number for $\alpha=1$ and $Z=10$ (1) and $\alpha=4$ and $Z=40$ (2) in collisionless plasma. Dashed lines correspond to the super-Gaussian distribution function.}\\无碰撞等离子体中$\alpha=1$和$Z=10$(1)以及$\alpha=4$和$Z=40$(2)的无碰撞电子等离子体波衰减与波数的关系。虚线对应于超高斯分布函数。}
+  	\label{figure5}
+  \end{figure}
+  
+  
+  \begin{dmath}
+  \operatorname{Im} \chi_{e}(\omega, k)=  \left.\frac{2 \pi^{2}}{n_{e}} \frac{\omega_{p e}^{2}}{k^{3}} \omega f_{0}\right|_{v=|\omega / k|}
+  +\left.\frac{(2 \pi)^{3 / 2}}{n_{e}} \frac{\omega_{p e}^{2}}{\omega^{3}} v_{T e}^{3} \nu_{e i} f_{0}\right|_{v=0},
+  \end{dmath}
+
+  
+
+\enzhbox{  where $\nu_{e i}^{T}$ is the standard transport electron-ion collision frequency, $\nu_{e i}^{T}=4 \sqrt{2 \pi} Z e^{4} n_{e} \Lambda /\left(3 m_{e} v_{T e}^{3}\right)$. In Fig. 5 the resonant wave damping, which corresponds to the first term in Eq. (14) $\gamma_{p}=\omega_{p e} \operatorname{Im} \chi_{e}\left(\omega_{p}, k\right) / 2$, where $\omega_{p}^{2}=\omega_{p e}^{2}+3 k^{2} v_{T e}^{2}$, is plotted versus wave number.
+}{
+其中$\nu_{e i}^{T}$是标准输运电子-离子碰撞频率$\nu_{e i}^{T}=4 \sqrt{2 \pi} Z e^{4} n_{e} \Lambda /\left(3 m_{e} v_{T e}^{3}\right)$。在图5中，对应于式(14)xx002中的第一项的谐振波衰减，其中xx003，被绘制为与波数的关系图。
+}
+  
+
+\enzhbox{  In view of the important role played by the nonMaxwellian EDF for different laser-plasma coupling processes, an experimental verification of the particular form of these nonequilibrium states is of fundamental importance. Unfortunately there has been no direct evidence supporting the existence of these EDFs in laser-produced plasmas. The strongest confirmation so far is from the microwave experiment $^{19}$ where the Langmuir probe measurements in cold weakly ionized plasma indicated that the isotropic component of the EDF is non-Maxwellian.
+}{
+考虑到非麦克斯韦EDF在不同的激光-等离子体耦合过程中所起的重要作用，对这些非平衡态的特殊形式进行实验验证是非常重要的。不幸的是，没有直接证据支持在激光产生的等离子体中存在这些EDF。迄今最有力的证实来自微波实验$^{19}$，在该实验中，在冷的弱电离等离子体中的朗缪尔探针测量表明，EDF的各向同性分量是非麦克斯韦的。
+}
+  
+
+\enzhbox{  The favorable conditions for the existence of nonMaxwellian EDF have been recently achieved in gold disk plasmas ${ }^{6}$ created by powerful Nova laser beams. The experiment involved simultaneous measurements of ion-acoustic and Langmuir fluctuation spectra by Thomson scattering of a $2 \omega$ beam, which led to the accurate prediction of the ionic charge $Z$ and $T_{e}$. Langmuir fluctuations have been measured at relatively large values of $k / k_{\mathrm{D}}$ making the spectra very sensitive to the form of the EDF (here $k$ is the probed wave vector defined by the geometry of the scattering and $k_{\mathrm{D}}$ is the Debye wave number). In addition, the Thomson probe has reached high intensity values up to $10^{15} \mathrm{~W} / \mathrm{cm}^{2}$ giving values for the parameter $\alpha$ up to four, particularly at the late time when the background plasma temperature is low.
+}{
+最近，在强新星激光产生的金盘等离子体${ }^{6}$中，获得了非麦克斯韦EDF存在的有利条件。这项实验涉及通过$2 \omega$束流的汤姆森散射同时测量离子声谱和朗缪尔涨落谱，从而准确地预测了离子电荷$Z$和$T_{e}$。朗缪尔起伏在相对较大的$k / k_{\mathrm{D}}$处被测量到，这使得光谱对EDF的形式非常敏感(这里$k$是由散射几何定义的探测波矢量，$k_{\mathrm{D}}$是德拜波数)。此外，汤姆森探测器已经达到了高达$10^{15} \mathrm{~W} / \mathrm{cm}^{2}$的高强度值，使参数$\alpha$的值高达4，特别是在背景等离子体温度较低的后期。
+}
+  
+
+\enzhbox{  In Fig. 2 of Ref. 6 four Langmuir wave spectra have been shown. Three of them, at the later times $t>1.5 \mathrm{~ns}$, have been measured after the heater beams are off and decreasingbackground plasma temperature creates conditions of $\alpha>1$. The theoretical interpretation of the Langmuir wave spectra has been based on the generalized expressions for the scattered power in inhomogeneous plasmas $^{6}$ and the standard model of the dynamical form factor $S(k, \omega),{ }^{20}$
+}{
+在文献6的图2中，显示了四个朗缪尔波谱。其中三个是在加热束关闭和背景等离子体温度降低创造了$\alpha>1$的条件后测量的，在后来的时间$t>1.5 \mathrm{~ns}$。朗缪尔波谱的理论解释是基于非均匀等离子体$^{6}$中散射功率的普遍表达式和动态形状因子$S(k, \omega),{ }^{20}$的标准模型
+}
+  
+  \begin{figure}[tbp]
+  	\centering
+  	\includegraphics[max width=0.6\textwidth,max height=1.0\textheight]{2023_07_14_223496a1d5b88caed160g-6}
+  	\caption{\uline{The electron plasma wave fluctuation spectra (in arbitrary units) as a function of the scattered light wavelength in $\AA$. Experimental data (noisy solid line) is taken from Ref. 6 and corresponds to the measurement at $t$ $=2.25$ ns. A Maxwellian fit $\left(T_{e}=750 \mathrm{eV}, n_{e}=5.5 \times 10^{19} \mathrm{~cm}^{-3}\right)$ is given by a dotted line. The dashed line shows a fit with the super-Gaussian EDF (11) and the solid line corresponds to the spectrum calculated with a new nonMaxwellian EDF (13) for the following plasma parameters $m=4, n_{e}=4.5$ $\times 10^{19} \mathrm{~cm}^{-3}, T_{e}=950 \mathrm{eV}, Z=26$.}\\电子等离子体波起伏光谱(以任意单位表示)随散射光波长的变化($\AA$)。实验数据(有噪声的实线)取自参考文献6，与$t$ $=2.25$ ns的测量值相对应。麦克斯韦拟合度$\left(T_{e}=750 \mathrm{eV}, n_{e}=5.5 \times 10^{19} \mathrm{~cm}^{-3}\right)$由虚线表示。虚线与超高斯EDF(11)相吻合，而实线对应于用新的非麦克斯韦EDF(13)计算的如下等离子体参数$m=4, n_{e}=4.5$ $\times 10^{19} \mathrm{~cm}^{-3}, T_{e}=950 \mathrm{eV}, Z=26$的谱。}
+  	\label{figure6}
+  \end{figure}
+  
+  
+  \begin{equation}
+  S(k, \omega)=\frac{2 \pi}{|\boldsymbol{\epsilon}(k, \omega)|^{2}} \int d^{3} v f_{0}(v) \delta(\omega-\mathbf{k} \cdot \mathbf{v}),
+  \end{equation}
+  
+
+\enzhbox{  where $\omega$ is the frequency shift of the scattered from $5026 \AA$ wavelength of the probe and $\epsilon(k, \omega)$ is a plasma dielectric function.
+}{
+其中$\omega$是从探测器的$5026 \AA$波长散射的频移，$\epsilon(k, \omega)$是等离子体介电函数。
+}
+
+
+\enzhbox{
+	 Figure 6 shows the experimental data at $t=2.25 \mathrm{~ns}$ (this is the latest time spectra from Fig. 2 of Ref. 6). All Langmuir wave spectra in Ref. 6 have been interpreted by using a local Maxwellian distribution function for $f_{0}(v)$ in (15) (the dotted line in Fig. 6). The difficulty of trying to reproduce experimental data with a super-Gaussian EDF (11), in spite of $\alpha>1$, is illustrated in Fig. 6. A reduced number of superthermal electrons cannot support the broad Langmuir wave resonance (the dashed line in Fig. 6). However, non-Maxwellian EDF can well reproduce the short wavelength part (5500 $\AA$ $<\lambda<6500 \AA$ ) of the experimental spectrum (cf. Fig. 6) where the scattered power displays a local minimum (this feature of the experimental measurement is also apparent on two other plots, $t=2$ and $1.75 \mathrm{~ns}$, in Fig. 2 of Ref. 6). Theoretically, these local minima are only present for nonequilibrium distribution functions. The combined effect of the large fluctuation levels at the plasma wave resonance and the local minima at the shorter wavelength is well reproduced by our new distribution function as shown in Fig. 6 (solid line). This is the first, "almost", direct measurement showing signatures of the non-Maxwellian distribution functions in laser produced plasmas. In calculating the theoretical spectrum in Fig. 6 we assumed that the symmetric part of the EDF (13) is constant in time.
+	 }{
+
+图6显示了$t=2.25 \mathrm{~ns}$处的实验数据(这是参考文献6图2的最新时间谱)。文献6中的所有朗缪尔波谱都已用(15)中$f_{0}(v)$的局部麦克斯韦分布函数(图6中的虚线)解释。图6说明了试图用超高斯EDF(11)重现实验数据的困难，尽管有$\alpha>1$。减少的超热电子数量不能支持广泛的朗缪尔波共振(图6中的虚线)。然而，非麦克斯韦EDF可以很好地再现实验光谱的短波长部分(5500 $\AA$ $<\lambda<6500 \AA$)。图6)其中散射功率显示局部最小值(实验测量的这一特征在参考文献6的图2中的另外两个曲线图$t=2$和$1.75 \mathrm{~ns}$上也很明显)。理论上，这些局部极小值只存在于非平衡分布函数中。如图6(实线)所示，我们的新分布函数很好地再现了等离子体波共振时的大起伏能级和较短波长下的局部极小值的综合效应。这是第一次“几乎”直接测量激光产生的等离子体中非麦克斯韦分布函数的特征。在计算图6中的理论谱时，我们假设EDF(13)的对称部分是时间常数。
+}
+  
+  
+\section{结论和总结}
+\enzhbox{ In this paper, we have revisited the old problem of the temporal evolution of the EDF in laser heated plasmas for the case of moderate intensity laser fields $\left(v_{E} / v_{T e}<1\right.$ and $\left.Z v_{E}^{2} / v_{T e}^{2}>1\right)$. We have confirmed that the bulk of the electron distribution function is well approximated by the superGaussian form with the exponent $m$ varying with laser intensity according to the well-known fit by Matte et al. ${ }^{4}$ However the tail of the electron distribution is much more pronounced and approaches a Maxwellian distribution at velocities much larger than thermal velocity due to the $e-e$ collisions. In the transition region where velocities are slightly higher than the thermal velocity, the EDF is neither the usual super-Gaussian nor Maxwellian. The smaller the ion charge, the closer this transition region (12) is to the electron thermal velocity. This distribution function varies in time with increasing average kinetic energy of electrons due to IB heating. These analytical results have been confirmed using the particle simulation method. In the code the electrons evolve under the influence of a dipole laser field and collisions with like and unlike species. ${ }^{14}$ Our simulations have allowed the description of a smooth transition between the super-Gaussian electron bulk and the Maxwellian tail. We believe that our fit for the electron distribution function (13) can be useful for many practical applications.
+}{ 
+本文重新讨论了中等强度激光场$\left(v_{E} / v_{T e}<1\right.$和$\left.Z v_{E}^{2} / v_{T e}^{2}>1\right)$情况下激光加热等离子体中EDF的时间演化问题。根据Matte等人的熟知的拟合，我们已经证实，大部分电子分布函数可以很好地用指数$m$随激光强度变化的超高斯形式来近似。然而，由于$e-e$碰撞，电子分布的尾部更加明显，并且以比热速度大得多的速度接近麦克斯韦分布。在速度略高于热速度的过渡区，EDF既不是通常的超高斯分布，也不是麦克斯韦分布。离子电荷越小，这个过渡区(12)就越接近电子的热速度。这种分布函数随IB加热引起的电子平均动能的增加而变化。用粒子模拟方法对这些分析结果进行了验证。在代码中，电子在偶极激光场的影响下演化，并与相似和不同的物种发生碰撞。我们的模拟已经描述了超高斯电子体和麦克斯韦尾巴之间的平稳跃迁。我们相信我们对电子分布函数(13)的拟合在许多实际应用中都是有用的。
+}
+  
+
+\enzhbox{  In particular, the new EDF shows an increase in the Landau damping for most of the Langmuir waves as compared to results obtained with the super-Gaussian fit. We have interpreted the experimental spectrum of electron plasma wave fluctuations from Thomson scattering measurements. $^{6}$ This provides the first evidence for the existence of non-Maxwellian distribution functions in laserproduced plasmas.
+}{
+特别是，与超高斯拟合的结果相比，新的EDF显示了大多数朗缪尔波的朗道衰减的增加。我们从汤姆逊散射测量中解释了电子等离子体波起伏的实验光谱。这首次为激光等离子体中非麦克斯韦分布函数的存在提供了证据。
+}
+  \clearpage
+ 
+\section{ACKNOWLEDGMENTS}
+The authors acknowledge useful discussions with A. Maximov, V. N. Novikov, V. T. Tikhonchuk, and E. Valeo.
+
+This work was partly supported by the Natural Sciences and Engineering Research Council of Canada and by the Russian Basic Research Foundation (Grant No. N 00-0216063). This work was partially performed under the auspices of the U.S. Department of Energy by the University of California, Lawrence Livermore National Laboratory, through the Institute for Laser Science and Applications under Contract No. W-7405-ENG-48.
+
+${ }^{1}$ A. B. Langdon, Phys. Rev. Lett. 44, 575 (1980).
+
+${ }^{2}$ R. Jones and K. Lee, Phys. Fluids 25, 2307 (1982).
+
+${ }^{3}$ J. R. Albritton, Phys. Rev. Lett. 50, 2078 (1983).
+
+${ }^{4}$ J. P. Matte, M. Lamoureux, C. Moller, R. Y. Yin, J. Delettrez, J. Virmont, and T. W. Johnston, Plasma Phys. Controlled Fusion 30, 1665 (1988).
+
+${ }^{5}$ B. Chichkov, S. A. Shumsky, and S. A. Uryupin, Phys. Rev. A 45, 7475 (1992).
+
+${ }^{6}$ S. H. Glenzer, W. Rozmus, B. J. MacGowan, K. G. Estabrook, J. D. De Groot, G. B. Zimmerman, H. A. Baldis, J. A. Harte, R. W. Lee, E. A. Williams, and B. G. Wilson, Phys. Rev. Lett. 82, 97 (1999).
+
+${ }^{7}$ D. Deck, Laser Part. Beams 5, 49 (1987).
+
+${ }^{8}$ I. P. Shkarofsky, T. W. Johnston, and M. P. Bachynski, The Particle Kinetics of Plasmas (Addison-Wesley, Reading, MA, 1966).
+
+${ }^{9}$ A. V. Maximov, V. P. Silin, and M. V. Chegotov, Sov. J. Plasma Phys. 16, 331 (1990).
+
+${ }^{10} \mathrm{~S}$. Wolfram, Mathematica, 4th ed. (Wolfram Media \& Cambridge University Press, 1999).
+
+${ }^{11}$ K. N. Ovchinnikov, V. P. Silin, and S. A. Uryupin, Sov. J. Plasma Phys. 17, 748 (1991). ${ }^{12}$ P. Porshnev, G. Ferrante, and M. Zarcone, Phys. Rev. E 48, 2081 (1993).
+
+${ }^{13}$ T. Takizuka and H. Abe, J. Comput. Phys. 25, 205 (1977).
+
+${ }^{14}$ S. Ma, R. Sydora, and J. M. Dawson, Comput. Phys. Commun. 77, 190 (1993).
+
+${ }^{15}$ V. N. Novikov (private communication, 2000).
+
+${ }^{16}$ B. B. Afeyan, A. E. Chou, J. P. Matte, and W. J. Kruer, Phys. Rev. Lett. 80, 2322 (1998). ${ }^{17}$ S. A. Uryupin, S. Kato, and K. Mima, Phys. Plasmas 2, 3100 (1995).
+
+${ }^{18} \mathrm{~V}$. Yu. Bychenkov, W. Rozmus, and V. T. Tikhonchuk, Phys. Plasmas 4, 1481 (1997)
+
+${ }^{19}$ J. M. Liu, J. S. De Groot, J. P. Matte, T. W. Johnston, and R. P. Drake, Phys. Rev. Lett. 72, 2717 (1994).
+
+${ }^{20}$ S. Ichimaru, Statistical Plasma Physics (Addison-Wesley, Redwood City, 1991).
+
+  	%----------------------------------------------------------------------------------------
+  \end{sloppypar}	
+  \end{document}
