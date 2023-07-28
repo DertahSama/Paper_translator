@@ -1,4 +1,4 @@
-from TYPESET import TYPESET
+from TYPESET import TYPESET,open_file
 from TRANSLATE import TRANSLATE
 
 # =====子包需要的依赖，pyinstaller需要
@@ -16,10 +16,12 @@ print("这是一个利用服务商API自动全文翻译科技论文的python脚�
 print("输入的tex文件需要将文档PDF上传至mathpix识别后，导出latex下载。详见README。")
 print("——2023\n\n")
 
-TYPESET()
+basedir,filename=open_file()
+
+TYPESET(basedir,filename)
 
 input("<< 检查无误后，按回车继续翻译...")
 
-TRANSLATE()
+TRANSLATE(basedir,filename)
 
 input("<< 按任意键退出...")

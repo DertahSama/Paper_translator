@@ -1,1 +1,1 @@
-{"basedir": "E:/360\u4e0b\u8f7d-3/\u5bfc\u51fa\u9875\u9762\u81ea \u9ad8\u6e29\u5e38\u538b\u8d85\u5bfc(1)/2023_07_26_5d5bb5170199e52b7b57g", "filename": "2023_07_26_5d5bb5170199e52b7b57g.tex"}
+{"basedir": "E:/360\u4e0b\u8f7d-3/306-2001-Fourkal/2023_07_14_223496a1d5b88caed160g", "filename": "2023_07_14_223496a1d5b88caed160g.tex"}
