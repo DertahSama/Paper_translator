@@ -6,13 +6,17 @@
 改编自<https://github.com/Humphrey1997/Paper_trans>，这里稍加扩展改编，并打包成了exe便于使用。
 
 ## 功能
-还在硬啃英文文章吗？是时候全文翻译了！（该样例见`/DEMO`）
-![Alt text](demo-1.png)
-![Snipaste_2023-07-14_23-05-14](https://github.com/DertahSama/Paper_trans/assets/74524914/e43cfd01-32e0-4c64-87d6-12391638f733)
+还在硬啃英文文章吗？是时候全文翻译了！
 - 全自动排版、翻译
 - 中英对照
 - 公式、图片、表格正确处理
 - 可自定义模板
+  
+下面这个样例见`/DEMO`
+![Alt text](demo-1.png)
+运行实例：
+![Alt text](demo-2.png)
+
 
 ## 用法
 运行`main.py`即可。
@@ -37,10 +41,10 @@
 ### Latex编译pdf
 这一点请自寻教程。对初学者来说，推荐texLive + TexStudio的组合。
 
-## 使用TIPS
+## 使用注意
 ● 你可以直接运行`main.py`来一键运行，也可以分手动先后运行`TYPESET.py`和`TRANSLATE.py`来自己控制节奏。
 
-● 排版的latex**模板**是`template.tex`，阁下可以根据自己的喜好进行修改。注意其中以`% ==`开头的注释（如`% ==document body begins`）是本脚本的识别位点，不可删改，否则将导致运行错误。
+● 排版的latex**模板**是`template.tex`，你可以根据自己的喜好进行修改。注意其中以`% ==`开头的注释（如`% ==document body begins`）是本脚本的识别位点，不可删改，否则将导致运行错误。
 
 ● 之所以排版和翻译中间要暂停叫使用者检查，是因为mathpix的识别功能虽然已经高度成熟，但是仍然偶尔有翻车的地方，特别是下面容易被忽略的几个方面：
 1. **公式**是否正确，例如编号、多行；
