@@ -32,12 +32,16 @@ def ProgressBar(now,alls):
     sleep(0.01)
 
 def translate_text(client,text):
-    
-    inline_eqn_results = re.findall(r'\$.*?\$|\\\w+(?:{.*?})?|\\%',text) # 预处理行内公式
+    # 设置原文中要强制保持原样的部分
+    to_reserve=[r'\$.*?\$',         # 行内公式 
+                r'\\\w+(?:{.*?})?', # 任意latex命令
+                r'\\%',             # 百分号，这个「\」丢了的就成了latex注释符号
+                ]
+    reserved_results = re.findall('|'.join(to_reserve),text) 
     # print(inline_eqn_results)
     
-    for i in range(len(inline_eqn_results)):
-        inline_eqn=inline_eqn_results[i]
+    for i in range(len(reserved_results)):
+        inline_eqn=reserved_results[i]
         marker='xx'+'%02d'%i  # 把行内公式替换成标记，防止翻译时丢符号
         text = text.replace(inline_eqn,marker)
     
@@ -45,8 +49,8 @@ def translate_text(client,text):
 
     text_zh=tt.translator(client,text)
     
-    for i in range(len(inline_eqn_results)):
-        inline_eqn=inline_eqn_results[i]
+    for i in range(len(reserved_results)):
+        inline_eqn=reserved_results[i]
         marker='xx'+'%02d'%i
         text_zh = text_zh.replace(marker,inline_eqn) # 替换回来
 

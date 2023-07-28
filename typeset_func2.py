@@ -108,8 +108,7 @@ def modify_body(tex_0,tex_1):
     body = tex_0[start_idx+1:end_idx-1]
 
     insert_idx=FindFirst(r'==document body here',tex_1) # 在新文档中插入正文
-    # if not insert_idx:
-    #     insert_idx=FindFirst(r'\\end{document}',tex_1)-1 # 保底
+ 
     tex_1_new=tex_1[:insert_idx]+body+tex_1[insert_idx+1:]
 
     return tex_1_new
