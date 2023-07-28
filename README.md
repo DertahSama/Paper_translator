@@ -1,14 +1,13 @@
 # Paper_translator
 这是一个利用服务商API自动全文翻译科技论文的python脚本，需借助Mathpix识别服务。
 
-路径：英文PDF论文→Mathpix识别→翻译（腾讯百度deepL）→中文PDF
+路径：英文PDF论文→Mathpix识别→翻译（腾讯/百度/deepL/ChatGPT）→中文PDF
 
-改编自<https://github.com/Humphrey1997/Paper_trans>，这里稍加扩展改编后，打包成了exe，便于使用。
+改编自<https://github.com/Humphrey1997/Paper_trans>，这里稍加扩展改编，并打包成了exe便于使用。
 
 ## 功能
 还在硬啃英文文章吗？是时候全文翻译了！（该样例见release）
-![Snipaste_2023-07-14_22-45-11](https://github.com/DertahSama/Paper_trans/assets/74524914/5dbb558c-a9c0-422d-b701-833d323f55d2)
-
+![Alt text](demo-1.png)
 ![Snipaste_2023-07-14_23-05-14](https://github.com/DertahSama/Paper_trans/assets/74524914/e43cfd01-32e0-4c64-87d6-12391638f733)
 - 全自动排版、翻译
 - 中英对照
