@@ -31,7 +31,7 @@ def PDF_OCR():
     
     tic=time.time()
     if not prange:
-        prange=""
+        prange="1-"
         
     options = {
         "conversion_formats": {"tex.zip": True},
@@ -84,12 +84,12 @@ def PDF_OCR():
     savepath = os.path.abspath(config["PDF识别设置"]["保存路径"])
     if not os.path.exists(savepath):
         os.makedirs(savepath)
-    zipname = fname + ".zip"
+    zipname:str = fname + ".zip"
     zipname =savepath + "\\" +zipname
     zipname1=zipname
     i=1
     while os.path.exists(zipname1):
-        zipname1=zipname.repace(".zip",f"({i}).zip")
+        zipname1=zipname.replace(".zip",f"({i}).zip")
         i+=1
     zipname=zipname1
 
