@@ -10,7 +10,7 @@ def create_client():
         def __init__(self):
             self.translator_name="doubao_async"
             
-            logging.basicConfig(filename=f"log{datetime.datetime.now().strftime("%y%m")}.txt", level=logging.WARNING, format='[%(asctime)s] %(message)s',encoding="utf8")
+            logging.basicConfig(filename=f"log{datetime.datetime.now().strftime('%y%m')}.txt", level=logging.WARNING, format='[%(asctime)s] %(message)s',encoding="utf8")
             logging.warning("翻译器："+self.translator_name)
             
             # with open('translator_keys/openai_keys.json', 'r') as file:
@@ -31,9 +31,9 @@ def create_client():
             cachemode = "common_prefix" 
             
             # # 缓存术语表的功能，试一试 2025-02-21 10-03-37
-            with open(f"glossaries/{self.config["翻译设置"]["doubao-要用的术语表"]}.csv",'r',  encoding='utf-8') as f:
+            with open(f"glossaries/{self.config['翻译设置']['doubao-要用的术语表']}.csv",'r',  encoding='utf-8') as f:
                 glsy=f.read()
-                logging.warning("术语表："+f"glossaries/{self.config["翻译设置"]["doubao-要用的术语表"]}.csv")
+                logging.warning("术语表："+f"glossaries/{self.config['翻译设置']['doubao-要用的术语表']}.csv")
             
             # 索取contextid的工具人
             tmpclient = Ark(api_key=self.keys["api_key"])
@@ -76,10 +76,15 @@ def create_client():
             # tt["expiretime"]=str(datetime.datetime.now()+datetime.timedelta(seconds=self.config["翻译设置"]["doubao-上下文超时时间"])) 
             # with open("doubao-contextid.yaml","w",encoding="utf8") as f:  yaml.dump(tt,f,allow_unicode=1)
             
-            self.tokenup += response.usage["prompt_tokens"]
-            self.tokendown += response.usage["completion_tokens"]
-            self.tokencache += response.usage["prompt_tokens_details"]["cached_tokens"]
-            
+            try:
+                self.tokenup += response.usage["prompt_tokens"]
+                self.tokendown += response.usage["completion_tokens"]
+                self.tokencache += response.usage["prompt_tokens_details"]["cached_tokens"]
+            except:
+                self.tokenup += response.usage.prompt_tokens
+                self.tokendown += response.usage.completion_tokens
+                self.tokencache += response.usage.prompt_tokens_details.cached_tokens
+        
             # self.check_usage()
             
             return resulttext
