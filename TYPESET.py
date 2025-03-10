@@ -60,7 +60,7 @@ def open_file():
     return basedir,filename
 
 def TYPESET(basedir,filename):
-    logging.basicConfig(filename=f"log{datetime.datetime.now().strftime("%y%m")}.txt", level=logging.WARNING, format='[%(asctime)s] %(message)s',encoding="utf8")
+    logging.basicConfig(filename=f"log{datetime.datetime.now().strftime('%y%m')}.txt", level=logging.WARNING, format='[%(asctime)s] %(message)s',encoding="utf8")
     with open('filepath.txt', 'w', encoding='utf-8') as f:
             json.dump({'basedir':basedir,'filename':filename},f,indent=4, ensure_ascii=False)
     # with open('config.json',encoding='utf8') as f: config=json.load(f)
