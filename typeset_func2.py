@@ -547,7 +547,7 @@ def modify_figure(tex,format_figure):
                 if mo1:
                     num=mo1.group(1) # 序号
                     cap=mo1.group(2) # 图注
-                    if not re.search(r"^([A-Z]|\$|\(|[一-鿆]).*",cap): # 不是大写字母/公式/括号开头，说明不是题注，慎用。
+                    if not re.search(r"^([A-Z]|\$|\(|[一-鿆]).*",cap): # 不是大写字母/公式/括号开头，说明不可能是题注，慎用。
                         print(f"[**]警告：图片 {file} 的图注异常，请注意检查")
                         fmt_fig.append("% == ↑↑ CHECK HERE! 图注可能异常\n")
                     tex[idx1]="" # 清空原题注行
