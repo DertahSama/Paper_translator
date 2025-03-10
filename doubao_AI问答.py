@@ -14,7 +14,7 @@ with open('filepath.txt', encoding='utf-8') as f:
     file=json.load(f)
     basedir=file["basedir"]
 
-if tt["cachmode"] == "common_prefix":
+if tt["cachemode"] == "common_prefix":
     print("[*] 当前对话的缓存模式不支持上下文问答！")
     exit()
     
@@ -27,26 +27,28 @@ while 1:
     print("")
     askkk=input("（输入xxx来退出）>>")
     if askkk=="xxx": break
+    rsp=""
+    chat_stream = myclient.context.completions.create(
+        # 指定上下文ID
+        context_id=tt["contextid"],
+        # 指定模型
+        model=keys["model"],
+        # 设置消息列表，包含一个用户角色的消息
+        messages=[
+            {"role": "user", "content": askkk},
+        ],
+        # 设置为流式
+        stream=True,
+        )
+    for chunk in chat_stream:
+        if not chunk.choices:
+            continue
+        rsp += chunk.choices[0].delta.content
+        print(chunk.choices[0].delta.content,end="")
+        
     with open(basedir+r"\AI问答.md","a+",encoding="utf8") as f:
         f.writelines("\n\n.\n-------\n# "+datetime.datetime.now().strftime("%Y.%m.%d %H:%M:%S")+"\n")
         f.writelines("> "+askkk+"\n\n")
-        rsp=""
-        chat_stream = myclient.context.completions.create(
-            # 指定上下文ID
-            context_id=tt["contextid"],
-            # 指定模型
-            model=keys["model"],
-            # 设置消息列表，包含一个用户角色的消息
-            messages=[
-                {"role": "user", "content": askkk},
-            ],
-            # 设置为流式
-            stream=True,
-            )
-        for chunk in chat_stream:
-            if not chunk.choices:
-                continue
-            rsp += chunk.choices[0].delta.content
-            print(chunk.choices[0].delta.content,end="")
         f.writelines(rsp)
+
     print("")

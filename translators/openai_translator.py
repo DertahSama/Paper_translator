@@ -31,7 +31,7 @@ def create_client():
     class myclient(openai.OpenAI):
         def __init__(self):
             self.translator_name="openai"
-            logging.basicConfig(filename=f"log{datetime.datetime.now().strftime("%y%m")}.txt", level=logging.WARNING, format='[%(asctime)s] %(message)s',encoding="utf8")
+            logging.basicConfig(filename=f"log{datetime.datetime.now().strftime('%y%m')}.txt", level=logging.WARNING, format='[%(asctime)s] %(message)s',encoding="utf8")
             logging.warning("翻译器："+self.translator_name)
             
             # with open('translator_keys/openai_keys.json', 'r') as file:

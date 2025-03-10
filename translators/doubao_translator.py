@@ -8,7 +8,7 @@ def create_client():
     class myclient(Ark):
         def __init__(self):
             self.translator_name="doubao"
-            logging.basicConfig(filename=f"log{datetime.datetime.now().strftime("%y%m")}.txt", level=logging.WARNING, format='[%(asctime)s] %(message)s',encoding="utf8")
+            logging.basicConfig(filename=f"log{datetime.datetime.now().strftime('%y%m')}.txt", level=logging.WARNING, format='[%(asctime)s] %(message)s',encoding="utf8")
             logging.warning("翻译器："+self.translator_name)
             
             # with open('translator_keys/openai_keys.json', 'r') as file:
@@ -28,7 +28,7 @@ def create_client():
             cachemode = "session" if self.config["翻译设置"]["doubao-AI总结"] else "common_prefix" 
             
             # # 缓存术语表的功能，试一试 2025-02-21 10-03-37
-            with open(f"glossaries/{self.config["翻译设置"]["doubao-要用的术语表"]}.csv",'r',  encoding='utf-8') as f:
+            with open(f"glossaries/{self.config['翻译设置']['doubao-要用的术语表']}.csv",'r',  encoding='utf-8') as f:
                 glsy=f.read()
             response = self.context.create(
                 model=self.keys["model"],

@@ -7,3 +7,6 @@ compilecmd.txt
 __pycache__
 .vscode
 filepath.txt
+template.*
+!template.tex
+

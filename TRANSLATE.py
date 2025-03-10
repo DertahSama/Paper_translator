@@ -147,7 +147,7 @@ def TRANSLATE(basedir,filename):
 
 if __name__=="__main__":
     basedir,filename=open_file()
-    logging.basicConfig(filename=f"log{datetime.datetime.now().strftime("%y%m")}.txt", level=logging.WARNING, format='[%(asctime)s] %(message)s',encoding="utf8")
+    logging.basicConfig(filename=f"log{datetime.datetime.now().strftime('%y%m')}.txt", level=logging.WARNING, format='[%(asctime)s] %(message)s',encoding="utf8")
     logging.warning(".")
     logging.warning(".")
     TRANSLATE(basedir,filename)
