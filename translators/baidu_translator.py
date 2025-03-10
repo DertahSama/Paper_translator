@@ -16,7 +16,7 @@ def create_client():
     class baidu_client(object):
         def __init__(self):
             self.translator_name="baidu"
-            logging.basicConfig(filename=f"log{datetime.datetime.now().strftime("%y%m")}.txt", level=logging.WARNING, format='[%(asctime)s] %(message)s',encoding="utf8")
+            logging.basicConfig(filename=f"log{datetime.datetime.now().strftime('%y%m')}.txt", level=logging.WARNING, format='[%(asctime)s] %(message)s',encoding="utf8")
             logging.warning("翻译器："+self.translator_name)
             
             with open('设置.yaml', 'r',encoding="utf8") as file: config=yaml.load(file,Loader=yaml.Loader)
