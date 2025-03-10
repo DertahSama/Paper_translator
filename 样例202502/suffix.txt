@@ -1,0 +1,28 @@
+\section{REFERENCES}
+[1] TROYON, F., et al., Plasma Phys. Control. Fusion 26 (1984) 209.\\[0pt]
+[2] LAZARUS, E.A., et al., Phys. Fluids B 3 (1991) 2220; LAZARUS, E.A., et al., Phys. Fluids B 4 (1992) 3644.\\[0pt]
+[3] YUSHMANOV, P.N., et al., Nucl. Fusion 30 (1990) 1999.\\[0pt]
+[4] ZAKHAROV, L.E., Sov. Phys. - Tech. Phys. 16 (1971) 645 (English translation: Zh. Tekh. Fiz. 41 (1971) 823).\\[0pt]
+[5] MUKHOVATOV, V.S., SHAFRANOV, V.D., Nucl. Fusion 11 (1971) 605.\\[0pt]
+[6] LAZARUS, E.A., et al., Nucl. Fusion 30 (1990) 111.\\[0pt]
+[7] HOFMANN, F., et al., in Fusion Technology 1986 (Proc. 14th Symp. Avignon, 1986), Vol. 1, Pergamon Press, Oxford (1986) 687.\\[0pt]
+[8] TAYLOR, T.S., et al., in Plasma Physics and Controlled Nuclear Fusion Research 1990 (Proc. 13th Int. Conf. Washington, DC, 1990), Vol. 1, IAEA, Vienna (1991) 177 ; LAO, L.L., et al., Phys. Fluids B 4 (1992) 232.\\[0pt]
+[9] ERIKSSON, G., et al., in Plasma Physics (Proc. 1992 Int. Conf. Innsbruck), Vol. 16C, Part I, European Physical Society (1992) 343.\\[0pt]
+[10] ZARNSTORFF, M.C., et al., in Plasma Physics and Controlled Nuclear Fusion Research 1990 (Proc. 13th Int. Conf. Washington, DC, 1990), Vol. 1, IAEA, Vienna (1991) 109.\\[0pt]
+[11] LÜTJENS, H., et al., Comput. Phys. Commun. 69 (1992) 287.\\[0pt]
+[12] WARD, D.J., et al., J. Comput. Phys. 104 (1993) 221.\\[0pt]
+[13] LAVAL, G., et al., Phys. Fluids 17 (1974) 835.\\[0pt]
+[14] HANEY, S.W., FREIDBERG, J.P., Phys. Fluids B 1 (1989) 1637.\\[0pt]
+[15] ERIKSSON, H.G., Plasma Phys. Control. Fusion 34 (1992) 1721.\\[0pt]
+[16] REBHAN, E., Nucl. Fusion 15 (1975) 277.\\[0pt]
+[17] REBHAN, E., SALAT, A., Nucl. Fusion 16 (1976) 805.\\[0pt]
+[18] HOFMANN, F., SCHULTZ, C.G., in Controlled Fusion and Plasma Physics (Proc. 16th Eur. Conf. Venice, 1989), Vol. 13B, Part I, European Physical Society (1987) 335.\\[0pt]
+[19] BERNARD, L.C., et al., Nucl. Fusion 18 (1978) 1331.\\[0pt]
+[20] BECKER, G., LACKNER, K., in Plasma Physics and Controlled Nuclear Fusion Research 1976 (Proc. 6th Int. Conf. Berchtesgaden, 1976), Vol. 2, IAEA, Vienna (1977) 401.\\[0pt]
+[21] STAMBAUGH, R.D., et al., Nucl. Fusion 32 (1992) 1642.\\[0pt]
+[22] WARD, D.J., JARDIN, S.C., Nucl. Fusion 32 (1992) 973.\\[0pt]
+[23] PEARLSTEIN, L.D., Lawrence Livermore National Laboratory, personal communication, 1992.\\[0pt]
+[24] JARDIN, S.C., Plasma Physics Laboratory, Princeton University, personal communication, 1992.\\
+(Manuscript received 21 December 1992\\
+Final manuscript received 29 March 1993)
+

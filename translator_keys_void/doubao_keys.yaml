@@ -1,0 +1,5 @@
+
+api_key: ''
+base_url: https://ark.cn-beijing.volces.com/api/v3
+context_api: https://ark.cn-beijing.volces.com/api/v3/context/create
+model: ''

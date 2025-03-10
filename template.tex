@@ -1,0 +1,309 @@
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+% \RequirePackage{silence}
+% \WarningsOff*
+% \batchmode
+% \documentclass[twoside,twocolumn]{article}
+\documentclass[utf8]{ctexart}
+\raggedbottom
+\usepackage{ctex}
+
+% ======== 通用设置 ========
+
+% 页面布局
+\usepackage{geometry}
+\geometry{a4paper,top=3cm,bottom=3cm,inner=2cm,outer=2cm,marginparwidth=1.8cm}
+
+% 兼容utf8的字体设置
+\setmainfont{CMU Serif}
+% \setCJKmainfont[ItalicFont={华文楷体}]{思源宋体 CN}
+% 思源宋体CN下载：https://github.com/adobe-fonts/source-han-serif/releases/download/2.002R/14_SourceHanSerifCN.zip
+
+% 必备数学套件
+\usepackage{amsmath,amsthm,amsfonts,amssymb}
+\usepackage{bm,bbm,upgreek}
+
+% 图片导入配置
+\usepackage{graphicx}
+\usepackage[export]{adjustbox}
+% 搜寻图片的路径
+\graphicspath{ {./images/} }
+
+% 图注设置
+\usepackage[small,labelfont=bf,up,up,margin=2em]{caption} % Custom captions under/above floats in tables or figures
+
+% 公式、图等的编号设置
+\usepackage{chngcntr}
+%   \counterwithout{figure}{chapter}
+%   \counterwithin{equation}{section}
+
+% 列表设置
+\usepackage{enumitem} % Customized lists
+\setlist[itemize]{itemsep=0pt} % Make itemize lists more compact
+\setlist[enumerate]{itemsep=0pt,parsep=0pt,label={[\arabic*]}}
+
+% 页眉页脚
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyfoot[EL,OR]{\bfseries· \thepage ·}
+\fancyfoot[C]{}
+\renewcommand{\headrulewidth}{0pt}
+
+% 标题设置
+\usepackage{titling} % Customizing the title section
+% 摘要环境设置（book模板中无效）
+\usepackage{abstract} % Allows abstract customization
+\renewcommand{\abstractnamefont}{\normalfont\bfseries} % Set the "Abstract" text to bold
+\renewcommand{\abstracttextfont}{\normalfont\small\itshape} % Set the abstract itself to small italic text
+
+% 色彩
+\usepackage[svgnames]{xcolor} % added by Wenyin for color
+
+% 超链接设置
+\usepackage[
+colorlinks,
+linkcolor=blue,
+bookmarksnumbered=true,
+bookmarksopen=true
+]{hyperref}
+% unicode支持：pdf目录可以正确显示公式
+\hypersetup{unicode, psdextra}
+% PDF目录自定义
+\usepackage{bookmark}
+\bookmarksetup{
+	open,
+	numbered,
+	addtohook={%
+		\ifnum\bookmarkget{level}=0 % chapter
+		\bookmarksetup{bold,color=orange}%
+		\fi
+	}
+}
+
+
+
+
+% ======== 可选设置 ========
+
+% for multiple references with dash
+\usepackage[noadjust]{cite}
+\renewcommand{\citedash}{--}    % when \usepackage{cite}
+
+% 额外数学包
+\usepackage{mathrsfs} 	% for \mathscr
+\usepackage{mathtools} 	% for $\intertext{text}$
+\usepackage{breqn}		% 一个可以自动公式断行的公式环境，效果一般
+\usepackage{mhchem} 	%化学式
+\usepackage{esint}
+
+% 表格类
+\usepackage{booktabs} 	% Horizontal rules in tables
+%\usepackage{longtable}	% 长表格
+%\usepackage{tabu}		% 强大的表格包
+%\usepackage{supertabular}
+
+% 杂技
+\usepackage{multirow}	% 多栏布局
+\usepackage{ulem}		% 下划线
+\usepackage{tikz}		% 绘图工具
+\usepackage{framed}		% 文字加框
+\usepackage{setspace}	% 设置行间距等
+\usepackage{minitoc}	% 小目录
+%\usepackage{tcolorbox}	% 多彩盒子工具，巨复杂
+%\tcbuselibrary{skins,breakable,raster}
+\usepackage{float}		% 图片位置：H
+\usepackage{multicol}	% 普通多栏布局
+\usepackage{changepage} % 页面布局调整
+
+% 多文件
+\usepackage{subfiles}
+
+%代码抄录
+\usepackage{shortvrb}
+	% \MakeShortVerb|*		%|*·|*可以直接原文抄录为texttt
+%\usepackage{listings}
+%\lstset{
+	%	language=[LaTeX]TeX,					%语言
+	%	backgroundcolor=\color{yellow!10},			%背景颜色
+	%	basicstyle=\small\ttfamily,				%基本字格式
+	%	keywordstyle=\bfseries\color{purple},		%关键字格式
+	%	commentstyle=\color{gray},				%注释格式
+	%	numbers=left,						%行号
+	%	numberstyle=\ttfamily\small,				%行号格式
+	%	breaklines,							%允许断行
+	%	frame=shadowbox,						%外框线
+	%	escapeinside={<@}{@>},					%逃逸部分，还给Latex编码
+	%	lineskip=0pt,						%行距
+	%	xleftmargin=0.05\linewidth,
+	%	xrightmargin=0.05\linewidth,				%盒子宽度
+	%	morekeywords={rowfont}					%更多自定义关键词
+	%	}
+
+
+
+% 段落分栏包，实现中英对照排版的核心工具
+\usepackage{paracol}
+\setlength{\columnseprule}{0.5pt}
+\setlength{\columnsep}{2em}
+\columnratio{0.4}
+
+
+% ======== 自定义命令 ========
+
+% 数学自定义
+\newcommand{\vect}[1]{\mathbf{\boldsymbol{#1}}} % works for both English and Greek letters, but it does not work with mathtime pro lite fonts, see https://tex.stackexchange.com/questions/3535/bold-math-automatic-choice-between-mathbf-and-boldsymbol-for-latin-and-greek 
+% \newcommand{\matr}[1]{\boldsymbol{\mathrm{#1}}} % \matrix is defined in LaTeX2e kernel
+\newcommand{\tens}[1]{\boldsymbol{\mathrm{#1}}}
+\newcommand\ii{\symup{i}}
+\newcommand\ee{\symup{e}}
+\newcommand\dd{\symup{d}}
+\newcommand\ppi{\symup{\pi}}	%常用的正体字符:i,e,d,\pi
+
+\renewcommand{\paragraph}[1]{\textbf{#1}}
+% ====== 对照排版的设置 ======
+
+% ===中英文对照排版，四六开===
+\columnratio{0.4}
+\newcommand\mainskip{-5pt}
+\newcommand\enzhbox[2]{
+	\quad\par \begin{paracol}{2} \colseprulecolor{black} 
+		\begin{spacing}{1.0}
+			\footnotesize  #1
+		\end{spacing}
+		\switchcolumn[1] 
+		#2
+	\end{paracol} \quad\par
+}
+
+% ===中英文对照排版，五五开===
+%\columnratio{0.48}
+%\newcommand\mainskip{-5pt}
+%\newcommand\enzhbox[2]{
+%	\quad\par \begin{paracol}{2} \colseprulecolor{black} 
+%		\begin{spacing}{1.0}
+%			\small  #1
+%		\end{spacing}
+%		\switchcolumn[1] 
+%		#2
+%	\end{paracol} \quad\par
+%}
+
+% === 仅英文（#1）/仅中文（#2） ===
+% \newcommand\mainskip{5pt}
+% \newcommand\enzhbox[2]{#1}
+%\newcommand\enzhbox[2]{#2}
+
+%%编号层级表
+%%-1 part
+%%0 chapter
+%%1 section
+%%2 subsection
+%%3 subsubsection
+%%4 paragraph
+%%5 subparagraph
+% % 章节标题编号深度
+% \setcounter{secnumdepth}{3}		
+% % 目录深度
+% \setcounter{tocdepth}{2}
+% % 小目录深度
+% \setcounter{minitocdepth}{3}
+% \renewcommand\mtctitle{本章目录}
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+% \setlength{\droptitle}{-4\baselineskip} % Move the title up
+
+% \pretitle{\begin{center}\Huge\bfseries} % Article title formatting
+% 	\posttitle{\end{center}} % Article title closing formatting
+\title{}
+\author{Author1, Author2}
+
+\newcommand\paperref{  == paperref here == }
+ 
+\date{\paperref}
+\fancyhead[C]{\small \paperref}
+\fancyhead[L,R]{}
+\renewcommand\headrulewidth{0.6pt}
+\renewcommand{\maketitlehookd}{%
+	\begin{abstract}
+		% ==abstract here
+	\end{abstract}
+}
+
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+\begin{sloppypar}
+	% \nonstopmode 
+	% \WarningsOff[latex] 
+% 公式环境的一些设置
+\allowdisplaybreaks[3]  
+\setlength{\abovedisplayskip}{-6pt}
+\setlength{\belowdisplayskip}{10pt}
+\setlength{\abovedisplayshortskip}{0pt}
+\setlength{\belowdisplayshortskip}{0pt}
+\setlength{\parskip}{\mainskip}
+
+	% \setcounter{chapter}{3}
+	\maketitle
+
+% ==document boby begins
+
+% ==document body here
+
+\setlength{\parskip}{0pt} \small % ==document body ends
+
+
+	%----------------------------------------------------------------------------------------
+\end{sloppypar}	
+\begin{flushright}
+	\vfill \footnotesize
+	——本翻译PDF由Paper_translator生成, \url{https://github.com/DertahSama/Paper_translator}
+\end{flushright}
+\end{document}
+
+
+
+
+% =========环境格式区===========
+
+% ==figure format begins
+\begin{figure}[H]
+	\centering
+	\includegraphics[max width=0.85\textwidth,max height=0.3\textheight]{}
+	\caption{}
+	\label{}
+\end{figure}
+% ==figure format ends
+
+% ==equation format begins
+\begin{align}
+	% ==here
+\end{align}
+% ==equation format ends
+
+
+% ==table format begins
+\begin{table}[H]
+	\centering
+	\caption{}
+	\label{}
+	% \resizebox{\textwidth}{!}{
+
+	% ==tabular here
+	
+	% }
+\end{table}
+% ==table format ends
+
+% == AIsummary format begins
+
+{\centering \textbf{AI总结} \par}
+\begin{adjustwidth}{0.1\linewidth}{0.1\linewidth} \small \setlength{\parskip}{2pt}
+%  == insert here
+\end{adjustwidth}   \setlength{\parskip}{\mainskip}
+
+% == AIsummary format ends

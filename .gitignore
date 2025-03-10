@@ -1,0 +1,9 @@
+/translator_keys
+log*.txt
+pbar.txt
+doubao-contextid.yaml
+temp.py
+compilecmd.txt
+__pycache__
+.vscode
+filepath.txt

@@ -1,0 +1,37 @@
+PDF识别设置:
+  保存路径: ../论文翻译ouput/
+
+排版设置:
+  处理filepath里储存的文件名: 1
+  立即编译所得tex: 0
+  这是一本书: 0
+
+翻译设置:
+  # 通用设置
+  处理filepath里储存的文件名: 1
+  立即编译所得tex: 1
+  翻译APIkeys文件夹: [D:/Softwares/translator_keys233, translator_keys, translator_keys_void] # 按顺序寻找，找到第一个存在的文件夹即读取
+  
+  默认翻译器: "5.1" # 1：百度；2：腾讯；3：openai；4：deepl；5：doubao
+
+  # 1：百度专用设置
+
+  # 2：腾讯专用设置  
+  tencent-要用的术语表id: ["",] # 术语表id，可以有多个，用逗号隔开
+
+  # 3：openai专用设置
+
+  # 4：deepl专用设置
+  deepL-只检查账号额度: 0
+  deepL-更新术语表: 1
+  deepL-要用的术语表: fusion_glossary # 放在glosaaries文件夹里的术语表文件名
+  deepL-重新检查账号额度: 1
+
+  # 5：doubao专用设置
+  doubao-AI总结: 0  # 是否在文章开头添加AI总结、具备AI问答能力。不可用于过长（超过20页PDF）的文章。
+  # 这关系到要采用的工作模式，开启的话费用更贵（不开启，模式"common_prefix"，费用线性于文章段数；开启，模式"session"，再额外加一平方于文章段数的项）
+  doubao-要用的术语表: fusion_glossary_distill #fusion_glossary # 放在glosaaries文件夹里的术语表文件名
+  doubao-上下文超时时间: 3600 # 单位秒，每次对话后重新计时
+
+
+  
