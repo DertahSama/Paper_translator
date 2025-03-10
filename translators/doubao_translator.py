@@ -75,9 +75,14 @@ def create_client():
             tt["expiretime"]=str(datetime.datetime.now()+datetime.timedelta(seconds=self.config["翻译设置"]["doubao-上下文超时时间"])) 
             with open("doubao-contextid.yaml","w",encoding="utf8") as f:  yaml.dump(tt,f,allow_unicode=1)
             
-            self.tokenup += response.usage.prompt_tokens
-            self.tokendown += response.usage.completion_tokens
-            self.tokencache += response.usage.prompt_tokens_details.cached_tokens
+            try:
+                self.tokenup += response.usage["prompt_tokens"]
+                self.tokendown += response.usage["completion_tokens"]
+                self.tokencache += response.usage["prompt_tokens_details"]["cached_tokens"]
+            except:
+                self.tokenup += response.usage.prompt_tokens
+                self.tokendown += response.usage.completion_tokens
+                self.tokencache += response.usage.prompt_tokens_details.cached_tokens
             
             # self.check_usage()
             

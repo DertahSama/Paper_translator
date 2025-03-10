@@ -654,6 +654,9 @@ def translate_list(client, tex_file):
 
 def AIsummary(client,tex,format_AIsum:str):
     print("[**] AI总结中……",end="")
+    sys.stdout.flush()
+    sleep(0.001)
+    
     rsp :str =client.asksth("总结上面翻译的论文的内容")
     
     # 提行加粗换为latex格式

@@ -126,19 +126,21 @@ def TRANSLATE(basedir,filename):
     # ====== doubao-AI问答 ======
     if config["翻译设置"]["doubao-AI总结"] and client.translator_name == "doubao":
         a=input(">> 要就这篇文章展开AI问答吗？（y开始/回车退出）：")
-        print("[**] 退出后你仍可以运行「doubao_AI问答.py」来继续对话哦！")
+        print("[**] 退出后你仍可以运行「doubao_AItalk.py」来继续对话哦！")
         if a=="y":
-            print("[**] 问答将保存到："+basedir+r"\AI问答.md")
-            while 1:
-                print("")
-                askkk=input("（输入xxx来退出）>>")
-                if askkk=="xxx": break
-                with open(basedir+r"\AI问答.md","a+",encoding="utf8") as f:
-                    f.writelines("\n\n.\n-------\n# "+datetime.datetime.now().strftime("%Y.%m.%d %H:%M:%S")+"\n")
-                    f.writelines("> "+askkk+"\n\n")
-                    rsp=client.asksth(askkk)
-                    f.writelines(rsp)
-                print(rsp)
+            from doubao_AItalk import AItalk
+            AItalk()
+            
+            # while 1:
+            #     print("")
+            #     askkk=input("（输入xxx来退出）>>")
+            #     if askkk=="xxx": break
+            #     with open(basedir+r"\AI问答.md","a+",encoding="utf8") as f:
+            #         f.writelines("\n\n.\n-------\n# "+datetime.datetime.now().strftime("%Y.%m.%d %H:%M:%S")+"\n")
+            #         f.writelines("> "+askkk+"\n\n")
+            #         rsp=client.asksth(askkk)
+            #         f.writelines(rsp)
+            #     print(rsp)
                     
             
 
