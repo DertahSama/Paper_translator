@@ -1,0 +1,6 @@
+deepl
+openai
+PyYAML
+Requests
+tencentcloud_sdk_python
+volcengine-python-sdk[ark]

@@ -10,7 +10,7 @@ PDF识别设置:
   # 通用设置
   处理filepath里储存的文件名: 1
   立即编译所得tex: 1
-  翻译APIkeys文件夹: [D:/Softwares/translator_keys233, translator_keys, translator_keys_void] # 按顺序寻找，找到第一个存在的文件夹即读取
+  翻译APIkeys文件夹: [../translator_keys, translator_keys, translator_keys_void] # 按顺序寻找，找到第一个存在的文件夹即读取
   
   默认翻译器: "5.1" # "x"：不设默认；"1"：百度；"2"：腾讯；"3"：openai；"4"：deepl；"5"：doubao；"5.1"：doubao_async
 

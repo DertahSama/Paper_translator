@@ -1,3 +1,5 @@
+# 适用于任意支持OpenAI SDK的大模型，比如chatGPT、doubao、deepseek等。
+# 举例：开通deepseek https://hcfy.ai/docs/services/deepseek
 api_key: ''
 base_url: ''
 model: ''

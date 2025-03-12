@@ -150,7 +150,7 @@
 ## 依赖与流程
 需要安装的包：
 ```
-pip install --upgrade requests deepl openai volcengine-python-sdk[ark]
+pip install --upgrade requests pyyaml deepl openai volcengine-python-sdk[ark]
 ```
 
 > **特别注意**：在安装字节跳动的volcengine-python-sdk[ark]前必须解除windows系统路径名长度的限制，否则会安装失败！打开一个有管理员权限的命令行窗口，运行：
