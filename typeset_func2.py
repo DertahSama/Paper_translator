@@ -543,7 +543,7 @@ def modify_figure(tex,format_figure):
             for idx1 in idx2search:  # idx1：题注文本所在的行
                 line1=tex[idx1]
                 
-                mo1=re.search(r'^(?:(?:fig|f1g)(?:ure)?|图)\.? *((?:\d+|[A-Z]|[一-鿆]|\$)\.?(?:\d+)?\.?) ?(.*)',line1,flags=re.IGNORECASE)
+                mo1=re.search(r'^(?:(?:fig|f1g)(?:ure)?|图)\.? *((?:\d+|[A-Z]|[一-鿆]|\$)\.?(?:\d+)?\.?)\:? ?(.*)',line1,flags=re.IGNORECASE)
                 if mo1:
                     num=mo1.group(1) # 序号
                     cap=mo1.group(2) # 图注
@@ -611,9 +611,9 @@ def modify_table1(tex,format_table):
                 fmt_tab=fmt_tab[:posi2insert-1]+tabularbody+fmt_tab[posi2insert+1:]
                 
                 idx2search=[] # 向上向下交替搜索
-                for x, y in zip(range(endoftabular+1,endoftabular+6), range(beginoftabular-1,beginoftabular-6,-1)): idx2search.extend([x, y])
+                for x, y in zip(range(beginoftabular-1,beginoftabular-6,-1),range(endoftabular+1,endoftabular+6)): idx2search.extend([x, y])
                 
-                for idx1 in idx2search: # 找表注：向上
+                for idx1 in idx2search: # 找表注
                     line1=tex[idx1]
                     if re.search(r'tab(?:le)?\.? ?((?:\d+|[A-Z])\.?(?:\d+)?)',line1,flags=re.IGNORECASE):
                         mo1=re.search(r'tab(?:le)?\.? ?((?:\d+|[A-Z])\.?(?:\d+)?\.?) ?(.*)',line1,flags=re.IGNORECASE)
@@ -677,10 +677,21 @@ def modify_table1(tex,format_table):
 
 def modify_stitch(tex:list[str]):
     floater = r'(figure|table)'
+    
 
     for loop in [1,2,3]: # 三次循环，确保所有的浮动体都被处理
-        idx=FindFirst(r"==document boby begins",tex)
-        while idx<len(tex)-1:
+        idx_docubegin=FindFirst(r"==document boby begins",tex)
+        idx_docuend=FindFirst(r"==document body ends",tex)
+        
+        # 是否在环境中    
+        flag_data=[1] *len(tex)
+        flag=0
+        for i in range(idx_docubegin,idx_docuend+1):
+            flag += len(re.findall(r'\\begin{.*?}',tex[i])) -len(re.findall(r'\\end{.*?}',tex[i]))
+            flag_data[i] = flag
+        
+        idx=idx_docubegin
+        while idx < idx_docuend:
             # if "First, using the non-rigid model," in tex[idx]:
             #     pass
         
@@ -691,28 +702,28 @@ def modify_stitch(tex:list[str]):
                 floater_end=FindFirst(r'\\end\{'+floater+r'\}',tex[idx+1:])+idx+1
 
                 # 找到浮动体前后的段落的位置
-                flag=0
+                # flag=0
                 floaterflag=0
                 isfound_before=0
-                for before_idx in range(floater_begin-1,floater_begin-10,-1):
-                    flag += len(re.findall(r'\\begin{.*?}',tex[before_idx])) -len(re.findall(r'\\end{.*?}',tex[before_idx]))
+                for before_idx in range(floater_begin-1,max(floater_begin-10,idx_docubegin),-1):
+                    # flag += len(re.findall(r'\\begin{.*?}',tex[before_idx])) -len(re.findall(r'\\end{.*?}',tex[before_idx]))
                     floaterflag += len(re.findall(r'\\begin{'+floater+r'}',tex[before_idx])) -len(re.findall(r'\\end{'+floater+r'}',tex[before_idx]))
-                    if flag==0 and re.search(r'^\w',tex[before_idx].strip()):
+                    if flag_data[before_idx]==0 and re.search(r'^\w',tex[before_idx].strip()):  # 不在环境中，且是字母开头，说明是一个段落
                         isfound_before=1
                         break
-                    if floaterflag==0 and flag!=0:
+                    if floaterflag==0 and flag_data[before_idx]!=0:
                         isabort=1   # 检索到别的环境了，说明不应该继续了
                     
-                flag=0
+                # flag=0
                 floaterflag=0
                 isfound_behind=0
-                for behind_idx in range(floater_end+1,floater_end+100):
-                    flag += len(re.findall(r'\\begin{.*?}',tex[behind_idx])) -len(re.findall(r'\\end{.*?}',tex[behind_idx]))
+                for behind_idx in range(floater_end+1,min(floater_end+100,idx_docuend)):
+                    # flag += len(re.findall(r'\\begin{.*?}',tex[behind_idx])) -len(re.findall(r'\\end{.*?}',tex[behind_idx]))
                     floaterflag += len(re.findall(r'\\begin{'+floater+r'}',tex[behind_idx])) -len(re.findall(r'\\end{'+floater+r'}',tex[behind_idx]))
-                    if flag==0 and re.search(r'^[\w\$]',tex[behind_idx].strip()):
+                    if flag_data[behind_idx]==0 and re.search(r'^[\w\$]',tex[behind_idx].strip()):  # 不在环境中，且是字母开头，说明是一个段落
                         isfound_behind=1
                         break
-                    if floaterflag==0 and flag!=0:
+                    if floaterflag==0 and flag_data[behind_idx]!=0:
                         isabort=1   # 检索到别的环境了，说明不应该继续了
                         
                 if isfound_before and isfound_behind and not isabort:
@@ -735,30 +746,32 @@ def modify_stitch(tex:list[str]):
 
                 idx=behind_idx+1
             
-            elif r"\begin{" in tex[idx]:   # 跳过其他环境
-                endidx=FindFirst(r"\\end\{",tex[idx:])+idx
-                idx=endidx+1
-            
-            elif re.search(r'\w+',tex[idx]) and re.search(r'^ *[a-z]',tex[idx+1]) and not "% ==" in tex[idx] and not "% ==" in tex[idx+1]:
-                # 一行有字，而下一行以小写字母开头，同时二者都不是注释点位行，则拼接
-                line : str = tex[idx]
-                line=line.strip()
-                line=re.sub(r'\\+\[0pt\]?$',"",line).strip()   # 删去末尾的「\\」，若有
-                flag=1
-                if re.search(r'-$',line):   # 如果最后一个字符是连字符，说明把一个单词劈开了
-                    flag=0
-                    line=re.sub(r'-$',"",line)  # 删去
+            elif flag_data[idx]==0: # 普通正文环境
+                # if r"\begin{" in tex[idx]:   # 跳过其他环境
+                #     endidx=FindFirst(r"\\end\{",tex[idx:])+idx
+                #     idx=endidx+1
                 
-                tex[idx] = line + " "*flag + tex[idx+1].strip() + "\n"
-                tex[idx+1] = "\n"
-                
+                if re.search(r'\w+',tex[idx]) and re.search(r'^ *[a-z]',tex[idx+1]) and not "% ==" in tex[idx] and not "% ==" in tex[idx+1]:
+                    # 一行有字，而下一行以小写字母开头，同时二者都不是注释点位行，则拼接
+                    line : str = tex[idx]
+                    line=line.strip()
+                    line=re.sub(r'\\+\[0pt\]?$',"",line).strip()   # 删去末尾的「\\」，若有
+                    flag=1
+                    if re.search(r'-$',line):   # 如果最后一个字符是连字符，说明把一个单词劈开了
+                        flag=0
+                        line=re.sub(r'-$',"",line)  # 删去
+                    
+                    tex[idx] = line + " "*flag + tex[idx+1].strip() + "\n"
+                    tex[idx+1] = "\n"
+                    
+                else: # 普通正文
+                    tex[idx]=re.sub(r"\\\\$","",tex[idx].strip())+"\n" # 删除末尾的「\\」
+                    tex[idx]=re.sub(r"\w *\\\\ *\w","",tex[idx]) # 删除中间的的「\\」
+                    
                 idx += 1
                 
-                
-            else: # 普通正文
-                tex[idx]=re.sub(r"\\\\$","",tex[idx].strip())+"\n" # 删除末尾的「\\」
-                tex[idx]=re.sub(r"\w *\\\\ *\w","",tex[idx]) # 删除中间的的「\\」
-                idx += 1
+            else: # 大概是在某个环境内部，不做处理
+                idx+=1
         
         
     
@@ -821,9 +834,9 @@ def ItIsABook(tex):  # 简单小替换
     for idx,line in enumerate(tex):
         line=re.sub(r'\\documentclass\[.*\]\{.*\}',r'\\documentclass[utf8]{ctexbook}',line)
         line=line.replace(r'\maketitle','')
-        line=line.replace(r'\section',r'\chapter')
-        line=line.replace(r'\subsection',r'\section')
-        line=line.replace(r'\subsubsection',r'\subsection')
+        line=line.replace(r'\section{',r'\chapter{')
+        line=line.replace(r'\subsection{',r'\section{')
+        line=line.replace(r'\subsubsection{',r'\subsection{')
         line=re.sub(r'\\.*{references?}',r'\\section{References}',line,flags=re.IGNORECASE)
 
         tex[idx]=line

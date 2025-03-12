@@ -9,4 +9,5 @@ __pycache__
 filepath.txt
 template.*
 !template.tex
+coverprocess.py
 

@@ -24,7 +24,7 @@
 
 ![show.jpg](carton/show.jpg)
 
-- 全自动
+- 全自动：英文pdf进，中文pdf出
 - 全文翻译，中英对照
 - 术语表
 - 公式、图片、表格正确处理
@@ -105,25 +105,36 @@
 你需要开通Mathpix API来识别pdf
 - 网址：<https://mathpix.com/pricing/api>
 - 价格（2025.3）：0.005美元/页PDF ，开通API付费20美元得30美元（6000页）
+- 将获取到的app_id与app_key填入`translator_keys/mathpix_keys.yaml`。
+
+如果你暂时不想开通API，可以手动将pdf上传到 <https://snip.mathpix.com> ，上传pdf，导出latex zip到本地，然后用本程序来处理。
+
+![mathpix](carton/mathpix.jpg)
 
 ### 翻译服务
-本脚本依靠公开的翻译服务API来工作，这里写好了几个服务的接口，这些API服务有付费的有免费的：
-- doubao （推荐，价格便宜，效果很好）
-- deepseek（效果也好，但价格是doubao的4倍）
-- chatGPT （需付费和外国信用卡）
-- deepL （免费但需外国信用卡）
-- 腾讯 （免费）
-- 百度 （免费）
+本脚本依靠公开的翻译服务API来工作，这里写好了几个服务的接口，这些API服务有付费的有免费的。
 
-doubao是字节跳动自家的大模型，开通API见[火山方舟](https://www.volcengine.com/product/ark)→控制台，另有包括deepseek在内的多种模型可以选择。
+申请API方法参考这里，写得很详细：<https://hcfy.ai/docs/services/>
 
-其它申请API方法可见<https://hcfy.app/docs/services/deepl>。
+申请到密钥后，在`translator_keys`文件夹中对应的文件加入自己的密钥即可：
 
-申请到密钥后，在`translator_keys`文件夹中对应的文件加入自己的密钥即可。
+- 填入`doubao_keys.yaml`：
+   - doubao （推荐doubao-1.5-pro，价格便宜效果好，还支持术语表（前缀缓存））
+- 填入`openai_keys.yaml`：
+   - deepseek（效果也好，但贵，v3价格是doubao1.5pro的4倍）
+   - chatGPT （需付费和外国信用卡，甚贵，4o价格是doubao1.5pro的35倍）
+   - 其它任何支持`OpenAI`接口调用的大模型API
+- 填入`deepl_keys.yaml`：
+   - deepL （每月免费额度，但需外国信用卡，可某宝购买）
+- 填入`tencent_keys.yaml`：
+   - 腾讯 （每月免费额度）
+- 填入`baidu_keys.yaml`：
+   - 百度 （每月免费额度）
 
->大模型（doubao、deepseek等）的翻译效果是最好的，推荐使用字节的火山方舟平台，服务稳定价格实惠。用doubao翻译一篇10页的论文，不带术语表约0.03元，带术语表约0.06元。
+
+>大模型（doubao、deepseek等）的翻译效果是最好的，推荐使用字节的火山方舟平台，服务稳定价格实惠。用doubao翻译一篇10页的论文，带术语表约0.05元。
 >
->"openai"翻译器是通用API接口，各AI API平台都支持，字节的火山方舟也支持，可在该接口下使用deepseek、ChatGPT等。但是不支持术语表。
+>"openai"翻译器是通用API接口，各AI API平台都支持，字节的火山方舟也支持，可在该接口下使用deepseek、ChatGPT等。但是不支持术语表（前缀缓存）。
 >
 >deepL的翻译质量尚可，其免费API：DeepL API Free（每月50万字符）虽然国内不能正常开通，但可以在某宝黄牛买到，一般价10元/个。可以一次买多个，本脚本特地针对此开发了自动换弹夹的功能~
 

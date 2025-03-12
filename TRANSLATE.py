@@ -113,6 +113,7 @@ def TRANSLATE(basedir,filename):
         os.system(cmd)
         print("[*] 已编译为PDF文件\n")
         logging.warning("[翻译]已编译为PDF文件")
+        os.startfile(output_file_path.replace('/','\\').replace('.tex','.pdf'))
 
     
     toc=time()
