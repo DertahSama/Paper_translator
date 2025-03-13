@@ -85,20 +85,7 @@ def PDF_OCR():
     logging.warning(".")
     logging.warning(".")
 
-    for apidir in config["翻译设置"]["翻译APIkeys文件夹"]:
-        if os.path.exists(apidir):
-            print("[**] 读取API于："+os.path.abspath(apidir)+'/mathpix_keys.yaml')
-            break
-    with open(apidir+'/mathpix_keys.yaml', 'r',encoding="utf8") as file: keys=yaml.load(file,Loader=yaml.Loader)
-    myheader={
-            "app_id": keys["app_id"],
-            "app_key": keys["app_key"]
-        }
-    if not myheader["app_id"]:
-        print(f"[error] 你还没用填写API keys！请到 {apidir}/ 中诸yaml文件里填写。若还没有API，申请方法请见README!")
-        logging.error("没填API keys")
-        input("按回车退出……")
-        exit()
+    
     
     print(">> 请打开一个PDF（点取消来处理本地的Mathpix zip）……")
     f_path = filedialog.askopenfilename(initialdir='./',filetypes=(('pdf files','*.pdf'),))
@@ -107,6 +94,22 @@ def PDF_OCR():
     (fdir,fname)=os.path.split(f_path)
     fname,ext=os.path.splitext(fname)
 
+    for apidir in config["翻译设置"]["翻译APIkeys文件夹"]:
+        if os.path.exists(apidir):
+            print("[**] 读取API于："+os.path.abspath(apidir)+'/mathpix_keys.yaml')
+            break
+    with open(apidir+'/mathpix_keys.yaml', 'r',encoding="utf8") as file: keys=yaml.load(file,Loader=yaml.Loader)
+    if not keys["app_id"]:
+        print(f"[error] 你还没用填写Mathpix API keys！请到 {apidir}/ 中填写。若还没有API，申请方法请见README!")
+        logging.error("[error]未找到Mathpix API keys")
+        input("按回车退出……")
+        exit()
+
+    myheader={
+            "app_id": keys["app_id"],
+            "app_key": keys["app_key"]
+        }
+    
     print(f_path)
     logging.warning(f"正在处理：{f_path}")
 

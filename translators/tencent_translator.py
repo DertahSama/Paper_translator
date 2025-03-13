@@ -29,6 +29,12 @@ def create_client():
             with open( apidir+'/tencent_keys.yaml', 'r',encoding="utf8") as file:
                 self.keys=yaml.load(file,Loader=yaml.Loader)
             
+            if not self.keys["id"]:
+                print("[error] 你还没填写翻译器API keys！请到 {apidir}/ 中填写。若还没有API，申请方法请见README!")
+                logging.error("[error]未找到翻译器API keys")
+                input("按回车退出……")
+                exit()
+
             cred = credential.Credential(self.keys['id'], self.keys['key'])
             
             super().__init__(cred, "ap-beijing")

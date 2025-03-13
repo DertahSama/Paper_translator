@@ -38,6 +38,11 @@ def create_client():
                     keys[idx]["state"]="on"  
                 if keys[idx]["state"]=="on":
                     auth_key = keys[idx]['key']  # Replace with your key
+                    if not keys[idx]['key']:
+                        print("[error] 你还没填写翻译器API keys！请到 {apidir}/ 中填写。若还没有API，申请方法请见README!")
+                        logging.error("[error]未找到翻译器API keys")
+                        input("按回车退出……")
+                        exit()
                     self.activated_key_idx=idx
                     super().__init__(auth_key)  # 初始化母class，即加载deepl翻译器
 

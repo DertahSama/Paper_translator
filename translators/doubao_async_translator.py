@@ -22,6 +22,12 @@ def create_client():
                     break
             with open(apidir+'/doubao_keys.yaml', 'r',encoding="utf8") as file: self.keys=yaml.load(file,Loader=yaml.Loader)    # 读取成一个dict
             
+            if not self.keys["api_key"]:
+                print("[error] 你还没填写翻译器API keys！请到 {apidir}/ 中填写。若还没有API，申请方法请见README!")
+                logging.error("[error]未找到翻译器API keys")
+                input("按回车退出……")
+                exit()
+
             super().__init__(api_key=self.keys["api_key"])
             
             # 2025-02-25 09-40-05 缓存模式

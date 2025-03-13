@@ -29,6 +29,13 @@ def create_client():
                 keys=yaml.load(f,Loader=yaml.Loader)
                 appid = keys['id']
                 appkey = keys['key']
+            
+            if not keys["id"]:
+                print("[error] 你还没填写翻译器API keys！请到 {apidir}/ 中填写。若还没有API，申请方法请见README!")
+                logging.error("[error]未找到翻译器API keys")
+                input("按回车退出……")
+                exit()
+
 
             endpoint = 'http://api.fanyi.baidu.com'
             path = '/api/trans/vip/translate'
