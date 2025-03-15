@@ -2,35 +2,11 @@ import openai,json,yaml,os,logging,datetime
 from time import sleep,time
 
 
-# def create_client():
-#     print('ChatGPT翻译为您服务')
-#     with open('translator_keys/openai_keys.json', 'r') as file:
-#         keys = json.load(file)
-#     openai.api_key = keys['key']
-#     return 0
-
-# def translator(client, text,  model='gpt-3.5-turbo'):
-#     response = openai.ChatCompletion.create(
-#         model="gpt-3.5-turbo",
-#         messages=[
-#         {"role": "system", "content": "Translate English latex text about plasma physics to Chinese latex text.Do not translate person's name.Be faithful or accurate in translation. Make the translation readable or intelligible. Be elegant or natural in translation.Do not add any additional text in the translation. Ensure that all percentage signs (%) are properly escaped"},
-#         #添加专有名词的翻译词典
-#         {"role": "system", "content": "- last closed surface:最外闭合磁面 "},
-#         {"role": "system", "content": "- kinetic:动理学 "},
-
-
-#         {"role": "user", "content": f" The text to be translated is:'{text}'\n"}
-#     	]
-#     )
-    
-#     translation = response.choices[0].message.content.strip()
-#     sleep(0.2) # 每秒最多请求5次，可以删掉这行来搞快点
-#     return translation
 def create_client():
-    print("[**] OpenAI（还是啥的）为您服务！")
+    print("[**] Qwen为您服务！")
     class myclient(openai.OpenAI):
         def __init__(self):
-            self.translator_name="openai"
+            self.translator_name="qwen"
             logging.basicConfig(filename=f"log{datetime.datetime.now().strftime('%y%m')}.txt", level=logging.WARNING, format='[%(asctime)s] %(message)s',encoding="utf8")
             logging.warning("翻译器："+self.translator_name)
             
@@ -39,9 +15,9 @@ def create_client():
             with open('设置.yaml', 'r',encoding="utf8") as file: self.config=yaml.load(file,Loader=yaml.Loader)
             for apidir in self.config["翻译设置"]["翻译APIkeys文件夹"]:
                 if os.path.exists(apidir):
-                    print("[**] 读取API："+apidir+'/openai_keys.yaml')
+                    print("[**] 读取API："+apidir+'/qwen_keys.yaml')
                     break
-            with open( apidir+'/openai_keys.yaml', 'r',encoding="utf8") as file:
+            with open( apidir+'/qwen_keys.yaml', 'r',encoding="utf8") as file:
                 self.keys=yaml.load(file,Loader=yaml.Loader)    # 读取成一个dict
             
             if not self.keys["api_key"]:
@@ -52,36 +28,42 @@ def create_client():
 
             super().__init__(api_key=self.keys["api_key"], base_url=self.keys["base_url"])
             
-            # # 缓存术语表的功能，试一试 2025-02-21 10-03-37
-            # with open("glossaries/fusion_glossary.csv",'r',  encoding='utf-8') as f:
-            #     glsy=f.read()
-            # response = openai.OpenAI(api_key=self.keys["api_key"], base_url=self.keys["context_api"]).chat.completions.create(
-            #     model=self.keys["model"],
-            #     messages=[
-            #         {"role": "system", "content": "你将要翻译一系列科技论文，人名和缩写保持原装不翻译，下面是术语表，每行逗号前的英文对应逗号后的中文：\n"+glsy},
-            #     ],
-            #     mode="session",
-            #     ttl=360,
-            # )
-            # self.contextid=response.id
+
             
+        def trans_text(self,text):
             
+            with open("glossaries/fusion_glossary_distill.csv",'r',encoding="utf8") as f:
+            # with open("glossaries/void.csv",'r',encoding="utf8") as f:
+                glsy=f.readlines()
+
+            glsylist=[]
+            for l in glsy:
+                cut=l.strip().split(",")
+                glsylist.append({"source":cut[0],"target":cut[1]})
+                
             
-        def asksth(self,text):
+            translation_options = {
+                "source_lang": "English",
+                "target_lang": "Chinese"
+            }
+            translation_options["terms"]=glsylist
+            
             response = self.chat.completions.create(
-                model=self.keys["model"],
+                model="qwen-mt-turbo",
                 messages=[
                     {"role": "user", "content": text},
                 ],
-                stream=False,
-                max_tokens=4096,
-                temperature=0.5,
+                extra_body={
+                    "translation_options": translation_options
+                }
             )
             resulttext=response.choices[0].message.content
+            
+            print(response)
             return resulttext
             
-        def trans_text(self,text):
-            return self.asksth("将下面这段latex格式论文文本翻译为中文（直接输出结果）："+text)
+        # def trans_text(self,text):
+        #     return self.asksth("将下面这段latex格式论文文本翻译为中文（直接输出结果）："+text)
             
     
     return myclient()

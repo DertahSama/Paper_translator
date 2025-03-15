@@ -1,6 +1,11 @@
 import re,requests,logging
 from typing import List, Union
 
+段落正常开头=r"^[ \t]*(?:$|[A-Z]|where|\\[a-zA-Z]|%|\\item|\[\d+\])"  # 空or大写字母or「where」or命令or注释or「\item」or「[1]」
+段落正常结尾=r'[\.\:] ?(\(.*\)|\[.*\])?$' # 句号or冒号
+段落中断开头=r"^[ \t]*(?:[a-z])" # 小写字母
+段落中断结尾=r"([a-z]|\$|,)$" # 小写字母or「$」or逗号
+
 def FindFirst(pat : str,lst : list,flg=0):  #找到字符串数组lst中第一次正则匹配到pat的索引位置
     try:
         i=lst.index(next(filter(re.compile(pat,flags=flg).search,lst)))
@@ -70,39 +75,57 @@ def getpaperref(thetitle :str) -> str:
         # 以标题查询该文章
         response = requests.get(
                     "http://api.semanticscholar.org/graph/v1/paper/search/bulk", 
-                    params={"query": f'"{thetitle}"'})
+                    params={"query": f'"{thetitle}"'},timeout=10)
         r= response.json()['data'][0]
         gettitle :str= r['title']
-        gettitle=re.sub(r"[^\u0000-\u00ff]","",gettitle)
-        # 查询到的文章标题应该与输入的文章标题一样
-        assert thetitle.lower().strip() == gettitle.lower().strip(), f"Expected title: {thetitle}, but got: {r['title']}"
+        gettitle=re.sub(r"[^\u0000-\u00ff]","",gettitle.replace(chr(0x2010),chr(0x2d)))
+        # # 查询到的文章标题应该与输入的文章标题一样
+        # assert thetitle.lower().strip() == gettitle.lower().strip(), f"Expected title: {thetitle}, but got: {r['title']}"
 
         # print(r)
         # print(r['paperId']) # 这篇文章的id
-
-        # 以id查询这篇文章的详细信息
-        paper = requests.post(
-                'https://api.semanticscholar.org/graph/v1/paper/batch',
-                params={'fields': 'title,journal,year,authors.name,externalIds'},
-                json={"ids": [r['paperId']]}
-        )
-        p=paper.json()[0]
-        # print(p)
-        # print(p["title"])
-        # print(p["year"])
-        # print(p["journal"]["name"])
-        # print([ au["name"] for au in p["authors"]])
-
-        # 形如：张三 (2021). 某某期刊. doi: 10.123456
-        totex=f'{p["authors"][0]["name"]} ({p["year"]}). {p["journal"]["name"]}. doi: \\href{{https://www.doi.org/{p["externalIds"]["DOI"]}}}{{{p["externalIds"]["DOI"]}}}'
-        todisp=f'{p["authors"][0]["name"]} ({p["year"]}). {p["journal"]["name"]}. doi: {p["externalIds"]["DOI"]}'
-        print(todisp)
-        logging.warning("在semantic scholar找到该文章信息："+todisp)
     except:
+        gettitle=None
+        isfound=0
+    
+    if gettitle:
+        if gettitle.lower().strip()==thetitle.lower().strip():
+            # 以id查询这篇文章的详细信息
+            try:
+                paper = requests.post(
+                        'https://api.semanticscholar.org/graph/v1/paper/batch',
+                        params={'fields': 'title,journal,year,authors.name,externalIds'},
+                        json={"ids": [r['paperId']]},
+                        timeout=10
+                )
+                p=paper.json()[0]
+                # print(p)
+                # print(p["title"])
+                # print(p["year"])
+                # print(p["journal"]["name"])
+                # print([ au["name"] for au in p["authors"]])
+
+                # 形如：张三 (2021). 某某期刊. doi: 10.123456
+                totex=f'{p["authors"][0]["name"]} ({p["year"]}). {p["journal"]["name"]}. doi: \\href{{https://www.doi.org/{p["externalIds"]["DOI"]}}}{{{p["externalIds"]["DOI"]}}}'
+                todisp=f'{p["authors"][0]["name"]} ({p["year"]}). {p["journal"]["name"]}. doi: {p["externalIds"]["DOI"]}'
+                print(todisp)
+                logging.warning("在semantic scholar找到该文章信息："+todisp)
+                isfound=1
+            except:
+                isfound=0
+        else:
+            print(f"Expected title: {thetitle}, but got: {r['title']}")
+            logging.warning(f"Expected title: {thetitle}, but got: {r['title']}")
+            isfound=0
+    else:
+        isfound=0
+    
+    if not isfound:
         todisp=""
         totex=""
         print("未找到引用")
         logging.warning("在semantic scholar未找到该文章信息")
+            
     
     return totex
     
@@ -537,10 +560,10 @@ def modify_figure(tex,format_figure):
             idx_of_caption=0
             fmt_fig = insert_tex(fmt_fig,'includegraphics',file)
             
-            idx2search=[] # 向上向下交替搜索
-            for x, y in zip(range(idx+1,idx+6), range(idx-1,idx-6,-1)): idx2search.extend([x, y])
+            # idx2search=[] # 向上向下交替搜索
+            # for x, y in zip(range(idx+1,idx+6), range(idx-1,idx-6,-1)): idx2search.extend([x, y])
             
-            for idx1 in idx2search:  # idx1：题注文本所在的行
+            for idx1 in range(idx+1,idx+6):  # idx1：题注文本所在的行
                 line1=tex[idx1]
                 
                 mo1=re.search(r'^(?:(?:fig|f1g)(?:ure)?|图)\.? *((?:\d+|[A-Z]|[一-鿆]|\$)\.?(?:\d+)?\.?)\:? ?(.*)',line1,flags=re.IGNORECASE)
@@ -689,6 +712,10 @@ def modify_stitch(tex:list[str]):
         for i in range(idx_docubegin,idx_docuend+1):
             flag += len(re.findall(r'\\begin{.*?}',tex[i])) -len(re.findall(r'\\end{.*?}',tex[i]))
             flag_data[i] = flag
+            if flag==0: # 在普通正文中
+                tex[i]=re.sub(r"\\\\(\[0pt\])?$","\n",tex[i].strip())+"\n" # 删除末尾的「\\」or「\\[0pt]」
+                tex[i]=re.sub(r"\w *\\\\ *\w","",tex[i]) # 删除中间的的「\\」
+                
         
         idx=idx_docubegin
         while idx < idx_docuend:
@@ -708,7 +735,7 @@ def modify_stitch(tex:list[str]):
                 for before_idx in range(floater_begin-1,max(floater_begin-10,idx_docubegin),-1):
                     # flag += len(re.findall(r'\\begin{.*?}',tex[before_idx])) -len(re.findall(r'\\end{.*?}',tex[before_idx]))
                     floaterflag += len(re.findall(r'\\begin{'+floater+r'}',tex[before_idx])) -len(re.findall(r'\\end{'+floater+r'}',tex[before_idx]))
-                    if flag_data[before_idx]==0 and re.search(r'^\w',tex[before_idx].strip()):  # 不在环境中，且是字母开头，说明是一个段落
+                    if flag_data[before_idx]==0 and re.search(r"\w",tex[before_idx].strip()) and not re.search(r"% *==",tex[before_idx].strip()):  # 不在环境中，有字，且不是标记点位
                         isfound_before=1
                         break
                     if floaterflag==0 and flag_data[before_idx]!=0:
@@ -720,7 +747,7 @@ def modify_stitch(tex:list[str]):
                 for behind_idx in range(floater_end+1,min(floater_end+100,idx_docuend)):
                     # flag += len(re.findall(r'\\begin{.*?}',tex[behind_idx])) -len(re.findall(r'\\end{.*?}',tex[behind_idx]))
                     floaterflag += len(re.findall(r'\\begin{'+floater+r'}',tex[behind_idx])) -len(re.findall(r'\\end{'+floater+r'}',tex[behind_idx]))
-                    if flag_data[behind_idx]==0 and re.search(r'^[\w\$]',tex[behind_idx].strip()):  # 不在环境中，且是字母开头，说明是一个段落
+                    if flag_data[behind_idx]==0 and re.search(r"\w",tex[behind_idx].strip()) and not re.search(r"% *==",tex[behind_idx].strip()):  # 不在环境中，有字，且不是标记点位
                         isfound_behind=1
                         break
                     if floaterflag==0 and flag_data[behind_idx]!=0:
@@ -728,10 +755,10 @@ def modify_stitch(tex:list[str]):
                         
                 if isfound_before and isfound_behind and not isabort:
                     # 下面看前后段落是不是应该拼接起来
-                    tex[before_idx]=re.sub(r"\\$","",tex[before_idx].strip())+"\n" # 删除末尾的「\\」
-                    tex[behind_idx]=re.sub(r"\\$","",tex[behind_idx].strip())+"\n" # 删除末尾的「\\」
+                    tex[before_idx]=re.sub(r"\\\\(?:\[0pt\])$","\n",tex[before_idx].strip())+"\n" # 删除末尾的「\\」or「\\[0pt]」
+                    tex[behind_idx]=re.sub(r"\\\\(?:\[0pt\])$","\n",tex[behind_idx].strip())+"\n" # 删除末尾的「\\」or「\\[0pt]」
                     
-                    if re.search(r'[\.\:] ?(\(.*\)|\[.*\])?$',tex[before_idx].strip()) and re.search(r'^[A-Z]',tex[behind_idx].strip()):
+                    if re.search(段落正常结尾,tex[before_idx].strip()) or re.search(段落正常开头,tex[behind_idx].strip()):
                         pass  # 如果前段落的末尾是句号or冒号（忽略括号）、且后段落的起始是大写字母，则不拼接
                     elif re.search(r'^\\.*\{.*\}',tex[behind_idx].strip()) or re.search(r'^\\.*\{.*\}',tex[before_idx].strip()):
                         pass  # 如果前后段有一个是命令环境（章节标题/公式），则不拼接
@@ -740,6 +767,7 @@ def modify_stitch(tex:list[str]):
                     elif r"% ==" in tex[behind_idx] or r"% ==" in tex[before_idx]:
                         pass # 如果前后段有一个是「% ==」这样的位点，则不拼接
                     else:  # 其它情况都拼接。
+                        tex[before_idx]=re.sub(r"\\\\$","",tex[before_idx])
                         gathered=tex[before_idx].strip() + ' ' +tex[behind_idx].strip()
                         tex[before_idx]=gathered+'\n'
                         tex[behind_idx]='% ==AUTO MOVED \n'
@@ -755,7 +783,7 @@ def modify_stitch(tex:list[str]):
                     # 一行有字，而下一行以小写字母开头，同时二者都不是注释点位行，则拼接
                     line : str = tex[idx]
                     line=line.strip()
-                    line=re.sub(r'\\+\[0pt\]?$',"",line).strip()   # 删去末尾的「\\」，若有
+                    line=re.sub(r'\\+(:\[0pt\])?$',"",line).strip()   # 删去末尾的「\\」，若有
                     flag=1
                     if re.search(r'-$',line):   # 如果最后一个字符是连字符，说明把一个单词劈开了
                         flag=0
@@ -765,7 +793,7 @@ def modify_stitch(tex:list[str]):
                     tex[idx+1] = "\n"
                     
                 else: # 普通正文
-                    tex[idx]=re.sub(r"\\\\$","",tex[idx].strip())+"\n" # 删除末尾的「\\」
+                    tex[idx]=re.sub(r"\\\\(?:\[0pt\])$","\n",tex[idx].strip())+"\n" # 删除末尾的「\\」or「\\[0pt]」
                     tex[idx]=re.sub(r"\w *\\\\ *\w","",tex[idx]) # 删除中间的的「\\」
                     
                 idx += 1
@@ -789,11 +817,13 @@ def modify_stitch(tex:list[str]):
         flag += len(re.findall(r'\\begin{.*?}',line)) - len(re.findall(r'\\begin{itemize}|\\begin{enumarate}',line))  #子环境层数，但不包括列表环境
 
         if flag==0: # 非子环境内（或在列表环境内）
-            if not re.search(r"^[ \t]*(?:$|[A-Z]|where|\\[a-zA-Z]|%|\\item)",line) : # 不是{空行or大写字母or「where」or命令or注释符号or\item}开头，可能是错误断段
+            if not re.search(段落正常开头,line) : # 不是{空行or大写字母or「where」or命令or注释符号or\item}开头，可能是错误断段
                 backcheckidx=idx-1
                 while re.match(r"^[ \t]*$",tex[backcheckidx]): # 是空行，就继续往上找
                     backcheckidx -= 1
-                if not re.search(r"\\end\{align",tex[backcheckidx]):  # 如果找到的第一个非空行，是公式的结尾「\end{align」，则什么也不做
+                if re.search(r"\\end\{align",tex[backcheckidx]):  # 如果找到的第一个非空行，是公式的结尾「\end{align」，则什么也不做
+                    pass
+                else:
                     tex[idx]=line.strip() + "\n   % == ↑↑ CHECK HERE! 也许是错误断段\n"    # 否则，可能是错误断段
                     cnt+=1
             if not (re.search(r"[\.,\:\?\!]$|",line.strip()) or len(line.strip())==0 ): # 不是{标点符号结尾or空行}
