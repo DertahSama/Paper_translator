@@ -710,11 +710,12 @@ def modify_stitch(tex:list[str]):
         flag_data=[1] *len(tex)
         flag=0
         for i in range(idx_docubegin,idx_docuend+1):
-            flag += len(re.findall(r'\\begin{.*?}',tex[i])) -len(re.findall(r'\\end{.*?}',tex[i]))
+            flag += len(re.findall(r'\\begin{.*?}',tex[i]))
             flag_data[i] = flag
             if flag==0: # 在普通正文中
                 tex[i]=re.sub(r"\\\\(\[0pt\])?$","\n",tex[i].strip())+"\n" # 删除末尾的「\\」or「\\[0pt]」
                 tex[i]=re.sub(r"\w *\\\\ *\w","",tex[i]) # 删除中间的的「\\」
+            flag -= len(re.findall(r'\\end{.*?}',tex[i]))  
                 
         
         idx=idx_docubegin
@@ -734,24 +735,26 @@ def modify_stitch(tex:list[str]):
                 isfound_before=0
                 for before_idx in range(floater_begin-1,max(floater_begin-10,idx_docubegin),-1):
                     # flag += len(re.findall(r'\\begin{.*?}',tex[before_idx])) -len(re.findall(r'\\end{.*?}',tex[before_idx]))
-                    floaterflag += len(re.findall(r'\\begin{'+floater+r'}',tex[before_idx])) -len(re.findall(r'\\end{'+floater+r'}',tex[before_idx]))
+                    floaterflag += len(re.findall(r'\\begin{'+floater+r'}',tex[before_idx])) 
                     if flag_data[before_idx]==0 and re.search(r"\w",tex[before_idx].strip()) and not re.search(r"% *==",tex[before_idx].strip()):  # 不在环境中，有字，且不是标记点位
                         isfound_before=1
                         break
                     if floaterflag==0 and flag_data[before_idx]!=0:
                         isabort=1   # 检索到别的环境了，说明不应该继续了
+                    floaterflag -= len(re.findall(r'\\end{'+floater+r'}',tex[before_idx]))
                     
                 # flag=0
                 floaterflag=0
                 isfound_behind=0
                 for behind_idx in range(floater_end+1,min(floater_end+100,idx_docuend)):
                     # flag += len(re.findall(r'\\begin{.*?}',tex[behind_idx])) -len(re.findall(r'\\end{.*?}',tex[behind_idx]))
-                    floaterflag += len(re.findall(r'\\begin{'+floater+r'}',tex[behind_idx])) -len(re.findall(r'\\end{'+floater+r'}',tex[behind_idx]))
+                    floaterflag += len(re.findall(r'\\begin{'+floater+r'}',tex[behind_idx])) 
                     if flag_data[behind_idx]==0 and re.search(r"\w",tex[behind_idx].strip()) and not re.search(r"% *==",tex[behind_idx].strip()):  # 不在环境中，有字，且不是标记点位
                         isfound_behind=1
                         break
                     if floaterflag==0 and flag_data[behind_idx]!=0:
                         isabort=1   # 检索到别的环境了，说明不应该继续了
+                    floaterflag -= len(re.findall(r'\\end{'+floater+r'}',tex[behind_idx]))
                         
                 if isfound_before and isfound_behind and not isabort:
                     # 下面看前后段落是不是应该拼接起来
